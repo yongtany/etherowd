@@ -1,0 +1,20 @@
+{
+  "name": "SoftIT",
+  "version": "1.0.0",
+  "description": "KNU Software Community Platform.",
+  "main": "index.js",
+  "author": "yongtany",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/server.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "dotenv": "^6.2.0"
+  }
+}
