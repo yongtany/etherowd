@@ -4,6 +4,8 @@ import WOW from 'wow.js';
 import styles from './Banner.scss';
 import classNames from 'classnames/bind';
 
+import NavbarContainer from 'containers/common/NavbarContainer';
+
 const cx = classNames.bind(styles);
 
 class Banner extends Component  {
@@ -13,7 +15,10 @@ class Banner extends Component  {
 
   render() {
     return (
-      <section className={cx("banner")}>
+      <section id="banner">
+         {/* Navbar */}
+        <NavbarContainer />
+
         <div className={cx('banner-content')}>
           <div className={cx('banner-box')}>
             <h1><strong>Soft IT</strong></h1>

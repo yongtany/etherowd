@@ -1,0 +1,33 @@
+.navbar {
+  border: 0;
+  padding: 10px 10px;
+  transition: all 1s ease-in-out;
+  opacity: 0.9;
+  border-bottom: 1px;
+  border-bottom-color: #ce0a0a;
+  .navbar-brand {
+    font-size: 30px;
+    font-style: italic;
+    color: #ce0a0a!important;
+  }
+  .navbar-toggler {
+    color: white!important;
+    font-size: 20px;
+    border-color: white!important;
+    background-color: transparent;
+
+    &:hover {
+      background-color: #ce0a0a!important;
+      color: white;
+    }
+  }
+
+  a {
+    color: white!important;
+    font-size: 18px;
+
+    &:hover {
+      color: #ce0a0a!important;
+    }
+  }
+}

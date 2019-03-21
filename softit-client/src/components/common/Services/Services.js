@@ -5,11 +5,11 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 const Services = () => (
-  <section className={cx('services')}>
+  <section id="services">
     <div className={cx('container')}>
       {/* header */}
       <div className={cx('header text-center')}>
-        <h1><string>services</string></h1>
+        <h1><strong>services</strong></h1>
         <div className={cx('header-underline')}></div>
         <p className={cx('text-muted')}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p>
       </div>
