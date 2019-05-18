@@ -1,0 +1,51 @@
+#promise {
+  .container-fluid {
+    .row {
+      .promise-picture {
+        height: 600px;
+        background: url('../../../images/promisebackground.jpg');
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-top: 600px solid transparent;
+        border-right: 150px solid whitesmoke;
+      }
+
+      .promise-text {
+        height: 600px;
+        background-color: whitesmoke;
+        padding: 40px 20px;
+
+        .promise-icons {
+          p {
+            font-size: 20px;
+            line-height: 1.2rem;
+          }
+          .fa {
+            color: gray;
+            font-size: 40px;
+          }
+        }
+        .header {
+          h1 {
+            text-transform: uppercase;
+            font-size: 3rem;
+            margin-bottom: 5px;
+          }
+
+          .header-underline {
+            width: 150px;
+            border: 3px solid gray;
+            margin: 0 auto 20px auto;
+          }
+
+          p {
+            font-size: 1rem;
+            padding: 0 30px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,71 @@
+#banner {
+  height: 100vh;
+  background:url('../../../images/bannerBackground.jpg') fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+
+  .banner-content {
+    height: 100%;
+    width: 100%;
+    display: table;
+
+    .banner-box {
+      height: 100%;
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+
+      h1 {
+        margin: 0!important;
+        font-size: 2rem;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: white;
+      }
+
+
+      .banner-underline {
+        width: 300px;
+        border:3px solid white;
+        margin: 0 auto;
+      }
+
+      .link {
+        font-size: 1.5rem;
+        border: 2px solid white;
+        display: inline-block;
+        padding: 1rem 1.3rem!important;
+        margin-top: 20px;
+        margin-left: 1rem;
+        color: white;
+        text-decoration: none;
+
+        &:hover,:focus {
+          color: white;
+          background-color: gray;
+        }
+      }
+    }
+  }
+  .banner-icon{
+    .icon {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: white;
+      border: 2px solid white;
+      border-radius: 50%;
+      padding: 5px;
+
+      &:hover {
+        opacity: 0.8;
+        color: white;
+        background-color: white;
+      }
+    }
+  }
+}

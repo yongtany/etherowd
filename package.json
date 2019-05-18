@@ -15,6 +15,11 @@
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
-    "dotenv": "^6.2.0"
+    "dotenv": "^6.2.0",
+    "solc": "^0.4.17",
+    "truffle-hdwallet-provider": "0.0.3",
+    "web3": "^1.0.0-beta.35",
+    "fs-extra": "^7.0.1",
+    "ganache-cli": "^6.4.3"
   }
 }
