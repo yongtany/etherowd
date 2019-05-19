@@ -18,7 +18,7 @@
     "redux-actions": "^2.6.5",
     "redux-pender": "^2.0.12",
     "styled-components": "^4.2.0",
-    "web3": "^1.0.0-beta.50",
+    "web3": "1.0.0-beta.35",
     "wow.js": "^1.2.2"
   },
   "scripts": {

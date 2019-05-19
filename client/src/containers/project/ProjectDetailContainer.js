@@ -25,7 +25,7 @@ class ProjectDetailContainer extends Component {
   render() {
     const { loading, project, match } = this.props;
     const { id } = match.params;
-    const obj = Object.values(project.toJS());
+    const obj = Object.values(project);
     console.log(obj);
     if(loading) return <Loading />;
 

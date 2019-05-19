@@ -18,10 +18,10 @@ const Footer = () => {
           <h5 className="text-uppercase text-light">Investments</h5>
           <ul className="list-unstyled">
             <li>
-              <Link to="#!" className="text-light">투자하기</Link>
+              <Link to="/projects" className="text-light">투자하기</Link>
             </li>
             <li>
-              <Link to="#!" className="text-light">프로젝트 만들기</Link>
+              <Link to="/project/new" className="text-light">프로젝트 만들기</Link>
             </li>
           </ul>
         </div>
