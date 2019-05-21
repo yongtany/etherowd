@@ -33,19 +33,18 @@ class ProjectNewContainer extends Component {
           .send({
             from: accounts[0]
           });
-        toast.success("프로젝트가 생성되었습니다.");
+
         history.push('/projects');
       }
       else {
         toast.error('금액을 정확히 입력해주세요.');
       }
 
-
+      toast.success("프로젝트가 생성되었습니다.");
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
     this.setState({ loading: false });
-    toast.error('요청이 취소되었습니다.')
   };
 
   componentWillUnmount() {

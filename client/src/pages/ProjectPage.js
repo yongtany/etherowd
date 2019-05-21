@@ -1,6 +1,7 @@
 import React from 'react';
 import PageTemplate from 'components/common/PageTemplate';
 import ProjectDetailContainer from 'containers/project/ProjectDetailContainer';
+import ProjectContributeContainer from '../containers/project/ProjectContributeContainer';
 
 const ProjectPage = ({match}) => {
   const { id } = match.params;
@@ -8,6 +9,9 @@ const ProjectPage = ({match}) => {
     <PageTemplate>
       <ProjectDetailContainer
         id={id}
+      />
+      <ProjectContributeContainer
+        address={id}
       />
     </PageTemplate>
   );

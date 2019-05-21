@@ -24,7 +24,7 @@ export default handleActions({
   ...pender({
     type: GET_PROJECT,
     onSuccess: (state, action) => {
-      const { summary } = action.payload;
+      const  summary  = action.payload;
 
       return state.set('project', fromJS(summary));
     }

@@ -25,12 +25,12 @@ const ProjectNew = props => (
               </div>
               {
                 props.loading ?
-                <button className="btn btn-primary" type="button" disabled>
-                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                  Loading...
-                </button>
-              : <button className="btn btn-primary">Create!</button>
-            }
+                  <button className="btn btn-primary" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                  </button>
+                : <button className="btn btn-primary">Create!</button>
+              }
             </form>
           </div>
         </div>

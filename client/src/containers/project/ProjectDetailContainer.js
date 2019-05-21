@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
+import web3 from 'ethereum/web3';
 
 import * as projectActions from 'store/modules/project';
 import ProjectDetail from 'components/project/ProjectDetail';
@@ -25,13 +26,29 @@ class ProjectDetailContainer extends Component {
   render() {
     const { loading, project, match } = this.props;
     const { id } = match.params;
-    const obj = Object.values(project);
-    console.log(obj);
+
+    const {
+      address,
+      minimumContribution,
+      balance,
+      requestsCount,
+      approversCount,
+      manager
+    } = project.toJS();
+
+    const WeiToEther = web3.utils.fromWei(new web3.utils.BN(balance), 'ether');
+
     if(loading) return <Loading />;
 
     return (
       <ProjectDetail
         projectId={id}
+        address={address}
+        minimumContribution={minimumContribution}
+        balance={WeiToEther}
+        requestsCount={requestsCount}
+        approversCount={approversCount}
+        manager={manager}
       />
     );
   }

@@ -14,8 +14,15 @@ export const getRecentsList = async () => {
 
 export const getProject = async (address) => {
   const project = Project(address);
+
   const summary = await project.methods.getSummary().call();
 
-
-  return { summary };
+  return {
+    address: address,
+    minimumContribution: summary[0],
+    balance: summary[1],
+    requestsCount: summary[2],
+    approversCount: summary[3],
+    manager: summary[4]
+   };
 }
