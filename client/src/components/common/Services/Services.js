@@ -17,19 +17,19 @@ const Services = () => (
       <div className={cx('row')}>
         <div className={cx('col-md-4 col-sm-6 services-container text-center')}>
           <i className={cx("fas fa-search-dollar")}></i>
-          <h2><strong>Service</strong></h2>
+          <h2><strong>Investment</strong></h2>
           <p className={cx('text-muted')}>투자금이 필요한 당신 투자자들에게 투자 받습니다.</p>
         </div>
 
         <div className={cx('col-md-4 col-sm-6 services-container text-center')}>
           <i className={cx("fas fa-coins")}></i>
-          <h2><strong>Service</strong></h2>
-          <p className={cx('text-muted')}>블록체인 기반 플랫폼 이기 때문에 신뢰성이 보장되어 있습니다. </p>
+          <h2><strong>Security</strong></h2>
+          <p className={cx('text-muted')}>블록체인 기반 플랫폼 이기 때문에 보안성이 보장되어 있습니다. </p>
         </div>
 
         <div className={cx('col-md-4 col-sm-6 services-container text-center')}>
           <i className={cx('fa fa-user-shield')}></i>
-          <h2><strong>Service</strong></h2>
+          <h2><strong>Reliability</strong></h2>
           <p className={cx('text-muted')}>투자자와 사업자 간의 신뢰성, 안정성 확보 가능.</p>
         </div>
 

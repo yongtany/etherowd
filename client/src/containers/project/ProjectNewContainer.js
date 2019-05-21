@@ -35,12 +35,13 @@ class ProjectNewContainer extends Component {
           });
 
         history.push('/projects');
+        toast.success("프로젝트가 생성되었습니다.");
       }
       else {
         toast.error('금액을 정확히 입력해주세요.');
       }
 
-      toast.success("프로젝트가 생성되었습니다.");
+
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }

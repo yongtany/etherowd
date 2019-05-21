@@ -1,18 +1,20 @@
 import React from 'react';
 import styles from './ProjectDetail.scss';
 import classnames from 'classnames/bind';
+import { Link } from 'react-router-dom';
 
 const cx = classnames.bind(styles);
 
 const ProjectDetail = props => (
       <div className={cx('new-wrapper')}>
         <div className={cx('project-detail')}>
-          <div className="project-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <h2 className="display-4">Investment</h2>
-            <p className="lead">여러분의 투자를 기다립니다.</p>
+          <div className={cx('header text-center')}>
+            <h1><strong>Investment</strong></h1>
+            <div className={cx('header-underline')}></div>
+            <p className={cx('text-muted')}>여러분의 투자를 기다립니다.</p>
           </div>
-          <div className="container">
-            <div className="card-deck mb-3 text-center">
+          <div className="container ">
+            <div className="card-deck mt-2 mb-3 text-center">
               <div className="card mb-4 box-shadow">
                 <div className="card-header">
                   <h5 className="my-0 font-weight-normal">현 투자액 / 목표금액</h5>
@@ -45,6 +47,13 @@ const ProjectDetail = props => (
                   <h2 className="card-title pricing-card-title">{props.requestsCount}</h2>
                   <ul className="list-unstyled mt-3 mb-4">
                     <li>모금액에서 돈을 인출하려고 합니다. 요청은 투자자들에 한해서 승인받아야합니다.</li>
+                    <li>
+                      <Link  to={`/project/${props.address}/requests`}>
+                        <button className="btn btn-danger mt-3">
+                          요청 목록
+                        </button>
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </div>

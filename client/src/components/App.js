@@ -7,7 +7,8 @@ import {
   LandingPage,
   ListPage,
   ProjectPage,
-  NewProjectPage
+  NewProjectPage,
+  RequestPage
 } from 'pages';
 
 
@@ -16,7 +17,8 @@ const PublicRoutes = () => (
     <Route exact path="/" component={LandingPage} />
     <Route exact path="/projects" component={ListPage}/>
     <Route exact path="/project/new" component={NewProjectPage}/>
-    <Route path="/project/:id" component={ProjectPage}/>
+    <Route exact path="/project/:id" component={ProjectPage}/>
+    <Route exact path="/project/:id/requests" component={RequestPage} />
   </Switch>
 );
 
