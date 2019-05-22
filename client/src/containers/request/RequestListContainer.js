@@ -20,12 +20,15 @@ class RequestListContinaer extends Component {
   render() {
     const { requests, loading, id } = this.props;
 
+    const requestList = requests.toJS();
+
+    console.log(requestList);
 
     if(loading) return <Loading />;
 
     return (
       <RequestList
-        requests={requests}
+        requests={requestList}
         id={id}
       />
     );

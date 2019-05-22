@@ -13,7 +13,7 @@ const ProjectNew = props => (
             <p className={cx('text-muted')}>프로젝트를 개설하세요.</p>
           </div>
           <div className={cx('new-content')}>
-            <form onSubmit={props.onSubmit} error={props.errorMessage}>
+            <form onSubmit={props.onSubmit}>
               <div className="form-group">
                 <label>목표금액을 설정하세요.</label>
                 <input

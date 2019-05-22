@@ -4,17 +4,22 @@ import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
 import RequestRow from 'components/request/RequestRow';
-import { List } from 'immutable';
+import { request } from 'http';
+
 
 const cx = classNames.bind(styles);
 
-const RequestList = ({requests = List(), id}) => {
+const RequestList = ({requests, id}) => {
   const requestList = requests.map(
-    (address) => {
+    (request, index) => {
       return (
         <RequestRow
-          address={address}
-          key={address}
+          description={request.description}
+          value={request.value}
+          recipient={request.recipient}
+          approvalCount={request.approvalCount}
+          key={index}
+          id={index}
         />
       )
     }
@@ -29,11 +34,19 @@ const RequestList = ({requests = List(), id}) => {
             <div className={cx('header-underline')}></div>
             <p className={cx('text-muted')}>프로젝트를 진행하기 위해 발생한 요청사항입니다.</p>
           </div>
-          <Link to={`/project/${id}/requests/new`}>
-            <button className="btn btn-danger">
-              요청 추가
-            </button>
-          </Link>
+          <div>
+            <Link to={`/project/${id}`}>
+              <button className="btn btn-back">
+                뒤로 가기
+              </button>
+            </Link>
+            <Link to={`/project/${id}/requests/new`} className="right">
+              <button className="btn btn-danger">
+                요청 추가
+              </button>
+            </Link>
+          </div>
+
           <div className="container">
             <table className="table mt-5">
               <thead className="thead-dark">
@@ -57,6 +70,7 @@ const RequestList = ({requests = List(), id}) => {
                   <td><button className="btn btn-success">승인</button></td>
                   <td><button className="btn btn-danger">종료</button></td>
                 </tr>
+                {requestList}
               </tbody>
             </table>
           </div>

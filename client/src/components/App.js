@@ -8,7 +8,8 @@ import {
   ListPage,
   ProjectPage,
   NewProjectPage,
-  RequestPage
+  RequestPage,
+  NewRequestPage
 } from 'pages';
 
 
@@ -19,6 +20,7 @@ const PublicRoutes = () => (
     <Route exact path="/project/new" component={NewProjectPage}/>
     <Route exact path="/project/:id" component={ProjectPage}/>
     <Route exact path="/project/:id/requests" component={RequestPage} />
+    <Route exact path="/project/:id/requests/new" component={NewRequestPage} />
   </Switch>
 );
 
