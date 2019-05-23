@@ -3,6 +3,8 @@ import styles from './RequestNew.scss';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
+import LoadingButton from 'components/common/LoadingButton';
+
 const cx = classNames.bind(styles);
 
 const RequestNew = props => (
@@ -71,10 +73,9 @@ const RequestNew = props => (
               </div>
               {
                 props.loading ?
-                  <button className="btn btn-danger" type="button" disabled>
-                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    Loading...
-                  </button>
+                <LoadingButton
+                  type={"danger"}
+                />
                 : <button className="btn btn-danger">요청하기</button>
               }
             </form>

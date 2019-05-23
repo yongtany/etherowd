@@ -9,7 +9,7 @@ export const getProjectList = async () => {
 
 export const getRecentsList = async () => {
   const projects = await factory.methods.getDeployedProjects().call();
-  const recents = projects.slice(-3);
+  const recents = projects.slice(-3).reverse();
   return { recents };
 };
 

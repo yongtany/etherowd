@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as requestActions from 'store/modules/request';
 import RequestList from 'components/request/RequestList';
-import Loading from 'components/common/Loader';
 
 
 class RequestListContinaer extends Component {
@@ -18,18 +17,13 @@ class RequestListContinaer extends Component {
   }
 
   render() {
-    const { requests, loading, id } = this.props;
-
-    const requestList = requests.toJS();
-
-    console.log(requestList);
-
-    if(loading) return <Loading />;
+    const { requests, approversCount, id } = this.props;
 
     return (
       <RequestList
-        requests={requestList}
-        id={id}
+        requests={requests}
+        approversCount={approversCount}
+        address={id}
       />
     );
   }
@@ -38,6 +32,7 @@ class RequestListContinaer extends Component {
 export default connect(
   (state) => ({
     requests: state.request.get('requests'),
+    approversCount: state.request.get('approversCount'),
     loading: state.pender.pending['list/GET_REQUEST_LIST'],
   }),
   (dispatch) => ({

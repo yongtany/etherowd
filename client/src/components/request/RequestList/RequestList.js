@@ -4,12 +4,16 @@ import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
 import RequestRow from 'components/request/RequestRow';
-import { request } from 'http';
-
+import Loading from 'components/common/Loader';
 
 const cx = classNames.bind(styles);
 
-const RequestList = ({requests, id}) => {
+const RequestList = ({requests, address, approversCount, onApprove, onFinalize}) => {
+
+  if(requests === undefined) {
+    return <Loading />
+  }
+
   const requestList = requests.map(
     (request, index) => {
       return (
@@ -18,8 +22,13 @@ const RequestList = ({requests, id}) => {
           value={request.value}
           recipient={request.recipient}
           approvalCount={request.approvalCount}
+          approversCount={approversCount}
+          onApprove={onApprove}
+          onFinalize={onFinalize}
+          complete={request.complete}
           key={index}
-          id={index}
+          index={index}
+          address={address}
         />
       )
     }
@@ -35,12 +44,12 @@ const RequestList = ({requests, id}) => {
             <p className={cx('text-muted')}>프로젝트를 진행하기 위해 발생한 요청사항입니다.</p>
           </div>
           <div>
-            <Link to={`/project/${id}`}>
+            <Link to={`/project/${address}`}>
               <button className="btn btn-back">
                 뒤로 가기
               </button>
             </Link>
-            <Link to={`/project/${id}/requests/new`} className="right">
+            <Link to={`/project/${address}/requests/new`} className="right">
               <button className="btn btn-danger">
                 요청 추가
               </button>
@@ -61,15 +70,6 @@ const RequestList = ({requests, id}) => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                  <td><button className="btn btn-success">승인</button></td>
-                  <td><button className="btn btn-danger">종료</button></td>
-                </tr>
                 {requestList}
               </tbody>
             </table>

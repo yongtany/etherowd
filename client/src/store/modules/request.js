@@ -14,6 +14,7 @@ export const getRequestList = createAction(GET_REQUEST_LIST, api.getRequestList)
 // initial state
 const initialState = Map({
   requests: List(),
+  approversCount: ''
 });
 
 
@@ -22,9 +23,10 @@ export default handleActions({
   ...pender({
     type: GET_REQUEST_LIST,
     onSuccess: (state, action) => {
-      const { requests } = action.payload;
+      const { requests, approversCount } = action.payload;
 
-      return state.set('requests', fromJS(requests));
+      return state.set('requests', fromJS(requests))
+                  .set('approversCount', approversCount);
     }
   }),
 }, initialState);

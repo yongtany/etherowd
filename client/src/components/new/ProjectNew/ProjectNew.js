@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './ProjectNew.scss';
 import classNames from 'classnames/bind';
 
+import LoadingButton from 'components/common/LoadingButton';
+
 const cx = classNames.bind(styles);
 
 const ProjectNew = props => (
@@ -27,10 +29,9 @@ const ProjectNew = props => (
               </div>
               {
                 props.loading ?
-                  <button className="btn btn-primary" type="button" disabled>
-                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    Loading...
-                  </button>
+                  <LoadingButton
+                    type={"primary"}
+                  />
                 : <button className="btn btn-primary">Create!</button>
               }
             </form>
