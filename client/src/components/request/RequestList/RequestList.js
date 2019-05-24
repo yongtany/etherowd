@@ -8,7 +8,7 @@ import Loading from 'components/common/Loader';
 
 const cx = classNames.bind(styles);
 
-const RequestList = ({requests, address, approversCount, onApprove, onFinalize}) => {
+const RequestList = ({ requests, address, approversCount, onApprove, onFinalize, me }) => {
 
   if(requests === undefined) {
     return <Loading />
@@ -29,6 +29,7 @@ const RequestList = ({requests, address, approversCount, onApprove, onFinalize})
           key={index}
           index={index}
           address={address}
+          me={me}
         />
       )
     }
@@ -49,11 +50,12 @@ const RequestList = ({requests, address, approversCount, onApprove, onFinalize})
                 뒤로 가기
               </button>
             </Link>
-            <Link to={`/project/${address}/requests/new`} className="right">
+            { me ? <Link to={`/project/${address}/requests/new`} className="right">
               <button className="btn btn-danger">
                 요청 추가
               </button>
-            </Link>
+            </Link> : <></>}
+
           </div>
 
           <div className="container">

@@ -37,7 +37,18 @@ class RequestRow extends Component {
   };
 
   onFinalize = async () => {
-    const { index, address, history } = this.props;
+    const { index, address, history, me, approvalCount, approversCount } = this.props;
+
+    if(!me) {
+      toast.error('관리자만 종료시킬수 있습니다.');
+      return {};
+    }
+
+    if(approvalCount < approversCount/2) {
+      toast.error('투자자들 과반수 이상의 승인을 받아야합니다.');
+      return {};
+    }
+
     const project = Project(address);
     this.setState({ loadingF: true });
 
