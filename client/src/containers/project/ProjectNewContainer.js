@@ -48,9 +48,6 @@ class ProjectNewContainer extends Component {
     this.setState({ loading: false });
   };
 
-  componentWillUnmount() {
-    this.setState({ loading: false });
-  }
 
   render() {
     const { onChange, onSubmit } = this;

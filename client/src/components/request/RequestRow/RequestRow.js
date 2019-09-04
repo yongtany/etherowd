@@ -44,7 +44,7 @@ class RequestRow extends Component {
       return {};
     }
 
-    if(approvalCount < approversCount/2) {
+    if(approvalCount <= approversCount/2) {
       toast.error('투자자들 과반수 이상의 승인을 받아야합니다.');
       return {};
     }

@@ -23,6 +23,12 @@ class ProjectDetailContainer extends Component {
     this.initialize();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.project !== this.props.project) {
+      this.initialize();
+    }
+  }
+
   render() {
     const { loading, project, match } = this.props;
     const { id } = match.params;

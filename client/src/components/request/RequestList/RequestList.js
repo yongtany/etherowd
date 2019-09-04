@@ -73,6 +73,7 @@ const RequestList = ({ requests, address, approversCount, onApprove, onFinalize,
               </thead>
               <tbody>
                 {requestList}
+
               </tbody>
             </table>
           </div>

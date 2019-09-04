@@ -3,7 +3,7 @@ import PageTemplate from 'components/common/PageTemplate';
 import ProjectDetailContainer from 'containers/project/ProjectDetailContainer';
 import ProjectContributeContainer from '../containers/project/ProjectContributeContainer';
 
-const ProjectPage = ({match}) => {
+const ProjectPage = ({ match }) => {
   const { id } = match.params;
   return (
     <PageTemplate>
