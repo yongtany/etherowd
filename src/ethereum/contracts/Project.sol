@@ -27,6 +27,7 @@ contract Project {
     address public manager;
     uint public minimumContribution;
     mapping(address => bool) public approvers;
+    address [] public contributors;
     uint public approversCount;
 
     modifier restricted() {
@@ -41,8 +42,8 @@ contract Project {
 
     function contribute() public payable {
         require(msg.value > minimumContribution);
-
         approvers[msg.sender] = true;
+        contributors.push(msg.sender);
         approversCount++;
     }
 
@@ -94,5 +95,9 @@ contract Project {
 
     function getRequestCount() public view returns (uint) {
       return requests.length;
+    }
+
+    function getContributors() public view returns (address []) {
+        return contributors;
     }
 }
