@@ -50,15 +50,25 @@ contract Project {
 
     function invest() public payable {
         require(msg.value > minimumDonation);
-        approvers[msg.sender] = true;
-        Investor memory newInvestors = Investor({
-            investorAddress: msg.sender,
-            donation: msg.value,
-            rank: 0
-        });
+        if(approvers[msg.sender]) {
+            for(uint i = 0; i < investors.length; i++) {
+                if(investors[i].investorAddress == msg.sender) {
+                    Investor storage investor = investors[i];
+                    investor.donation += msg.value;
+                }
+            }
+        } else {
+            approvers[msg.sender] = true;
 
-        investors.push(newInvestors);
-        approversCount++;
+            Investor memory newInvestors = Investor({
+                investorAddress: msg.sender,
+                donation: msg.value,
+                rank: 0
+            });
+
+            investors.push(newInvestors);
+            approversCount++;
+        }
     }
 
 
