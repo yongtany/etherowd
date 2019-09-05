@@ -14,6 +14,13 @@ contract ProjectFactory {
 }
 
 contract Project {
+    //프로젝트 투자자
+    struct Investor {
+        address investorAddress;
+        uint donation;
+        uint rank;
+    }
+    // 프로젝트 메니져의 요청 사항
     struct Request {
         string description;
         uint value;
@@ -23,11 +30,12 @@ contract Project {
         mapping(address => bool) approvals;
     }
 
+    Investor [] public investors;
     Request [] public requests;
     address public manager;
-    uint public minimumContribution;
+    uint public minimumDonation;
+
     mapping(address => bool) public approvers;
-    address [] public contributors;
     uint public approversCount;
 
     modifier restricted() {
@@ -37,15 +45,22 @@ contract Project {
 
     function Project(uint minimum, address creator) public {
         manager = creator;
-        minimumContribution = minimum;
+        minimumDonation = minimum;
     }
 
-    function contribute() public payable {
-        require(msg.value > minimumContribution);
+    function invest() public payable {
+        require(msg.value > minimumDonation);
         approvers[msg.sender] = true;
-        contributors.push(msg.sender);
+        Investor memory newInvestors = Investor({
+            investorAddress: msg.sender,
+            donation: msg.value,
+            rank: 0
+        });
+
+        investors.push(newInvestors);
         approversCount++;
     }
+
 
     function createRequest (string description, uint value, address recipient) public restricted {
         Request memory newRequest = Request({
@@ -59,33 +74,38 @@ contract Project {
         requests.push(newRequest);
     }
 
+    // 요청 승인에 투표
     function approveRequest(uint index) public {
         Request storage request = requests[index];
 
-        // Make sure person calling this funciton has donated
+        // 이 함수를 호출하는 사람이 투자했는지 확인.
         require(approvers[msg.sender]);
-        // Make sure person calling this function hasn't voted before
+        // 이 함수를 호출 한 사람이 전에 투표하지 않았는지 확인.
         require(!request.approvals[msg.sender]);
 
         request.approvals[msg.sender] = true;
         request.approvalCount++;
     }
 
+    // 요청이 과반수 이상 되었을 시 요청 종료 후 요청액 자동 송금
     function finalizeRequest(uint index) public restricted {
         Request storage request = requests[index];
 
+        // 전체 투자자중 과반수 이상 투표했는지 확인.
         require(request.approvalCount > (approversCount / 2));
+        // 요청이 완료되지 않았는지 확인
         require(!request.complete);
 
         request.recipient.transfer(request.value);
         request.complete = true;
     }
 
+    // 프로젝트 요약 데이터
     function getSummary() public view returns (
        uint, uint, uint, uint, address
     ) {
       return (
-        minimumContribution,
+        minimumDonation,
         this.balance,
         requests.length,
         approversCount,
@@ -95,9 +115,5 @@ contract Project {
 
     function getRequestCount() public view returns (uint) {
       return requests.length;
-    }
-
-    function getContributors() public view returns (address []) {
-        return contributors;
     }
 }
