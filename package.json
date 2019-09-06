@@ -6,16 +6,20 @@
   "author": "yongtany",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.19.2"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js"
+    "start:build": "tsc -w",
+    "start:run": "nodemon build/index.js",
+    "start": "concurrently yarn:start:*"
   },
   "dependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.3.1",
+    "@types/body-parser": "^1.17.1",
+    "@types/express": "^4.17.1",
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.2",
     "dotenv": "^6.2.0",
+    "express": "^4.17.1",
     "fs-extra": "^7.0.1",
     "ganache-cli": "^6.4.3",
     "ipfs-api": "22.0.1",
