@@ -28,12 +28,12 @@ contract Project {
         uint approvalCount;
         mapping(address => bool) approvals;
     }
-    
+
     Investor [] public investors;
     Request [] public requests;
     address public manager;
     uint public minimumDonation;
-    
+
     mapping(address => bool) public approvers;
     uint public approversCount;
 
@@ -56,21 +56,21 @@ contract Project {
                     investor.donation += msg.value;
                 }
             }
+            sort();
         } else {
             approvers[msg.sender] = true;
-       
+
             Investor memory newInvestor = Investor({
                 investorAddress: msg.sender,
                 donation: msg.value
             });
-            
+
             investors.push(newInvestor);
             approversCount++;
+            sort();
         }
-        
-        sort();
     }
-    
+
     function sort () public {
         uint length = investors.length;
         for(uint i = 0; i < length; i++) {
@@ -83,7 +83,6 @@ contract Project {
             }
         }
     }
-    
 
     function createRequest (string description, uint value, address recipient) public restricted {
         Request memory newRequest = Request({
