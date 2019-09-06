@@ -18,7 +18,6 @@ contract Project {
     struct Investor {
         address investorAddress;
         uint donation;
-        uint rank;
     }
     // 프로젝트 메니져의 요청 사항
     struct Request {
@@ -29,12 +28,12 @@ contract Project {
         uint approvalCount;
         mapping(address => bool) approvals;
     }
-
+    
     Investor [] public investors;
     Request [] public requests;
     address public manager;
     uint public minimumDonation;
-
+    
     mapping(address => bool) public approvers;
     uint public approversCount;
 
@@ -59,18 +58,32 @@ contract Project {
             }
         } else {
             approvers[msg.sender] = true;
-
-            Investor memory newInvestors = Investor({
+       
+            Investor memory newInvestor = Investor({
                 investorAddress: msg.sender,
-                donation: msg.value,
-                rank: 0
+                donation: msg.value
             });
-
-            investors.push(newInvestors);
+            
+            investors.push(newInvestor);
             approversCount++;
         }
+        
+        sort();
     }
-
+    
+    function sort () public {
+        uint length = investors.length;
+        for(uint i = 0; i < length; i++) {
+            for(uint j = 0; j < length - i - 1; j++) {
+                if(investors[j].donation < investors[j+1].donation ) {
+                    Investor memory temp = investors[j+1];
+                    investors[j+1] = investors[j];
+                    investors[j] = temp;
+                }
+            }
+        }
+    }
+    
 
     function createRequest (string description, uint value, address recipient) public restricted {
         Request memory newRequest = Request({
