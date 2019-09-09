@@ -32,9 +32,7 @@ class Banner extends Component  {
 
     // Look if user with current publicAddress is already present on backend
     fetch(
-      `${
-        process.env.REACT_APP_BACKEND_URL
-      }/users?publicAddress=${publicAddress}`
+      `/users?publicAddress=${publicAddress}`
     )
       .then(response => response.json())
       // If yes, retrieve it. If no, create it.
@@ -70,7 +68,7 @@ class Banner extends Component  {
   };
 
   handleSignup = publicAddress => {
-    return fetch(`${process.env.REACT_APP_BACKEND_URL}/users`, {
+    return fetch(`/api/auth`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
         'Content-Type': 'application/json'
@@ -87,7 +85,7 @@ class Banner extends Component  {
             <h1><strong>신뢰적 거래를 위한 이더리움 기반 크라우드 펀딩</strong><p>Etherowd</p></h1>
 
             <div className={cx("banner-underline")}></div>
-            <div className={cx('link')} onClick={this.handleClick}>시작하기</div>
+            <div className={cx('link')} onClick={this.handleSignup}>시작하기</div>
             <Link to="#signin" className={cx('link')}>자세히보기</Link>
           </div>
           <div className={cx("banner-icon")}>
