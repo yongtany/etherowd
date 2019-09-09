@@ -12,6 +12,18 @@ class Banner extends Component  {
     new WOW().init();
   }
 
+  handleAuthenticate = ({
+    publicAddress,
+    signature
+  }) =>
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/auth`, {
+      body: JSON.stringify({ publicAddress, signature }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    }).then(response => response.json());
+
   handleClick = async () => {
     const { onLoggedIn } = this.props;
 
@@ -28,6 +40,7 @@ class Banner extends Component  {
     }
 
     const publicAddress = coinbase.toLowerCase();
+    console.log(publicAddress)
     this.setState({ loading: true });
 
     // Look if user with current publicAddress is already present on backend
@@ -85,7 +98,7 @@ class Banner extends Component  {
             <h1><strong>신뢰적 거래를 위한 이더리움 기반 크라우드 펀딩</strong><p>Etherowd</p></h1>
 
             <div className={cx("banner-underline")}></div>
-            <div className={cx('link')} onClick={this.handleSignup}>시작하기</div>
+            <div className={cx('link')} onClick={this.handleClick}>시작하기</div>
             <Link to="#signin" className={cx('link')}>자세히보기</Link>
           </div>
           <div className={cx("banner-icon")}>
