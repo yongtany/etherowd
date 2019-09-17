@@ -2,6 +2,7 @@ import express  from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import morgan from 'morgan';
 import { keys } from './config/keys';
 import { router } from './routes';
 
@@ -12,6 +13,8 @@ mongoose.connect(keys.mongoURI, {
 
 const app = express();
 
+// Middlewares
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors());
 

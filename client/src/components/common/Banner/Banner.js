@@ -16,7 +16,7 @@ class Banner extends Component  {
     publicAddress,
     signature
   }) =>
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/auth`, {
+    fetch(`/auth`, {
       body: JSON.stringify({ publicAddress, signature }),
       headers: {
         'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ class Banner extends Component  {
     }
 
     const publicAddress = coinbase.toLowerCase();
-    console.log(publicAddress)
+
     this.setState({ loading: true });
 
     // Look if user with current publicAddress is already present on backend
@@ -81,7 +81,7 @@ class Banner extends Component  {
   };
 
   handleSignup = publicAddress => {
-    return fetch(`/api/auth`, {
+    return fetch(`/auth`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
         'Content-Type': 'application/json'
