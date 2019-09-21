@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.use('/users', require('routes/users.routes'));
+app.use('/auth', require('routes/auth.routes'));
 
 // Server start
 app.listen(process.env.PORT || 5000, err => {

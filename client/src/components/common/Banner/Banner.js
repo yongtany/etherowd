@@ -49,8 +49,7 @@ class Banner extends Component  {
     // Look if user with current publicAddress is already present on backend
     fetch(
       `/users?publicAddress=${publicAddress}`
-    )
-      .then(response => response.json())
+    ).then(response => response.json())
       // If yes, retrieve it. If no, create it.
       .then(users =>
         users.length ? users[0] : this.handleSignup(publicAddress)

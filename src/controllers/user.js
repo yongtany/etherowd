@@ -12,37 +12,62 @@ signToken = user => {
 }
 
 module.exports = {
-    signUp: async (req, res, next) => {
-      const { email, name, userName, password, profile_image } = req.value.body;
+    find: async (req, res, next) => {
+      // If a query string ?publicAddress=... is given, then filter results
+      const whereClause = req.query &&
+        req.query.publicAddress && {
+          where: { publicAddress: req.query.publicAddress }
+        };
 
-      // Check if there is a user with the same email
-      const foundUser = await User.findOne({"email": email });
-      if (foundUser) {
-        return res.status(403).json({ error: 'Email is already in use'});
+      return User.find(whereClause)
+        .then(users => res.json(users))
+        .catch(next);
+    },
+
+    get: async(req, res, next) => {
+      // AccessToken payload is in req.user.payload, especially its `id` field
+      // UserId is the param in /users/:userId
+      // We only allow user accessing herself, i.e. require payload.id==userId
+      if ((req).user.payload.id !== +req.params.userId) {
+        return res.status(401).send({ error: 'You can can only access yourself' });
       }
-
-      // Create a new user
-      const newUser = new User({
-          email: email,
-          password: password,
-          userName: userName,
-          name: name,
-          profile_image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlyd40MHRZp3DTs2eboJCA1F4ReLWby-iS090CKl-rj-zAlOq7',
-          provider: 'LOCAL'
-      });
-
-      await newUser.save();
-
-      // Generate the token
-      const token = signToken(newUser);
-      // Respond with token
-      res.status(200).json({ newUser,token });
+      return User.findById(req.params.userId)
+        .then(user => res.json(user))
+        .catch(next);
     },
-    signIn: async(req, res, next) => {
-      // Generate token
-      const token = signToken(req.user);
-      res.status(200).json({user: req.user.toJSON(), token: token});
+
+    create: async(req, res, next) => {
+      User.create(req.body)
+      .then((user) => res.json(user))
+      .catch(next);
     },
+
+    patch:  async(req, res, next) => {
+      // Only allow to fetch current user
+      if ((req).user.payload.id !== +req.params.userId) {
+        return res.status(401).send({ error: 'You can can only access yourself' });
+      }
+      return User.findByPk(req.params.userId)
+        .then(async user => {
+          if (!user) {
+            return user;
+          }
+
+          Object.assign(user, req.body);
+          return user.save();
+        })
+        .then(user => {
+          return user
+            ? res.json(user)
+            : res.status(401).send({
+                error: `User with publicAddress ${
+                  req.params.userId
+                } is not found in database`
+              });
+        })
+        .catch(next);
+    },
+
     secret: async(req, res, next) => {
         console.log('UsersController.secret() called!');
         res.json({ secret: "resource" });
