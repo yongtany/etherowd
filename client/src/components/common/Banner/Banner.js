@@ -8,6 +8,10 @@ import web3 from 'ethereum/web3';
 const cx = classNames.bind(styles);
 
 class Banner extends Component  {
+  state = {
+    loading: false // Loading button state
+  };
+
   componentDidMount() {
     new WOW().init();
   }
@@ -40,7 +44,6 @@ class Banner extends Component  {
     }
 
     const publicAddress = coinbase.toLowerCase();
-
     this.setState({ loading: true });
 
     // Look if user with current publicAddress is already present on backend
@@ -64,24 +67,21 @@ class Banner extends Component  {
       });
   };
 
-  handleSignMessage = async ({
-    publicAddress,
-    nonce
-  }) => {
-    try {
-      const signature = await web3.eth.personal.sign(
-        `I am signing my one-time nonce: ${nonce}`,
+  handleSignMessage = ({ publicAddress, nonce }) => {
+    return new Promise((resolve, reject) =>
+      web3.personal.sign(
+        web3.fromUtf8(`I am signing my one-time nonce: ${nonce}`),
         publicAddress,
-        '' // MetaMask will ignore the password argument here
-      );
-      return { publicAddress, signature };
-    } catch (err) {
-      throw new Error('You need to sign the message to be able to log in.');
-    }
+        (err, signature) => {
+          if (err) return reject(err);
+          return resolve({ publicAddress, signature });
+        }
+      )
+    );
   };
 
   handleSignup = publicAddress => {
-    return fetch(`/auth`, {
+    return fetch(`/users`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
         'Content-Type': 'application/json'

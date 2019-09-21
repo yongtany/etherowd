@@ -5,23 +5,12 @@
   "main": "index.js",
   "author": "yongtany",
   "license": "MIT",
-  "devDependencies": {
-    "nodemon": "^1.19.2"
-  },
   "scripts": {
-    "start:build": "tsc -w",
-    "start:run": "nodemon build/index.js",
-    "start": "concurrently yarn:start:*"
+    "dev": "cross-env NODE_PATH=./src nodemon src/index.js",
+    "start": "NODE_PATH=src node src",
+    "server": "nodemon index.js"
   },
   "dependencies": {
-    "@types/body-parser": "^1.17.1",
-    "@types/cors": "^2.8.4",
-    "@types/eth-sig-util": "^2.1.0",
-    "@types/express": "^4.17.1",
-    "@types/express-jwt": "^0.0.42",
-    "@types/jsonwebtoken": "^8.3.3",
-    "@types/mongoose": "^5.5.17",
-    "@types/morgan": "^1.7.37",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.2",
     "cors": "^2.8.5",
@@ -30,15 +19,26 @@
     "ethereumjs-util": "^6.1.0",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
+    "express-promise-router": "^3.0.3",
     "fs-extra": "^7.0.1",
     "ganache-cli": "^6.4.3",
     "ipfs-api": "22.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.13",
     "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "solc": "^0.4.17",
     "truffle-hdwallet-provider": "0.0.3",
     "web3": "^1.0.0-beta.35"
   },
-  "proxy": "http://localhost:5000/api/"
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "eslint": "^3.19.0",
+    "eslint-config-equimper": "^2.0.5",
+    "eslint-config-prettier": "^2.1.1",
+    "nodemon": "^1.11.0"
+  },
+  "proxy": "http://localhost:5000/"
 }
