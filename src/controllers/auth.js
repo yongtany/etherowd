@@ -1,7 +1,7 @@
+const User = require('models/user');
 const ethUtil = require('ethereumjs-util');
 const sigUtil = require('eth-sig-util');
 const jwt = require('jsonwebtoken');
-const User = require('models/user');
 const { JWT_SECRET } = require('config/keys');
 
 signToken = user => {
@@ -14,15 +14,17 @@ signToken = user => {
 }
 
 module.exports = {
-  create: async(req, res, next) => {
+  create: async (req, res, next) => {
     const { signature, publicAddress } = req.body;
     if (!signature || !publicAddress)
       return res
         .status(400)
         .send({ error: 'Request should have signature and publicAddress' });
 
+    console.log(publicAddress, signature);
+
     return (
-      User.findOne({ where: { publicAddress } })
+      await User.findOne({ where: { publicAddress } })
         ////////////////////////////////////////////////////
         // Step 1: Get the user with the given publicAddress
         ////////////////////////////////////////////////////

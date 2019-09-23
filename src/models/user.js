@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const userSchema = Schema({
   nonce: {
     type: Number,
-    default: Math.floor(Math.random() * 1000000)
   },
   publicAddress: {
     type: String,
@@ -32,6 +31,17 @@ userSchema.methods = {
     };
   },
 }
+
+userSchema.pre('save', async function(next) {
+  try {
+    const nonce = Math.floor(Math.random() * 10000);
+
+    this.nonce = nonce;
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 // Create a model
 const User = mongoose.model('User', userSchema);

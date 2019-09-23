@@ -19,7 +19,7 @@ module.exports = {
           where: { publicAddress: req.query.publicAddress }
         };
 
-      return User.find(whereClause)
+      return await User.find(whereClause)
         .then(users => res.json(users))
         .catch(next);
     },
@@ -31,13 +31,13 @@ module.exports = {
       if ((req).user.payload.id !== +req.params.userId) {
         return res.status(401).send({ error: 'You can can only access yourself' });
       }
-      return User.findById(req.params.userId)
+      return await User.findById(req.params.userId)
         .then(user => res.json(user))
         .catch(next);
     },
 
     create: async(req, res, next) => {
-      User.create(req.body)
+      await User.create(req.body)
       .then((user) => res.json(user))
       .catch(next);
     },
@@ -47,7 +47,7 @@ module.exports = {
       if ((req).user.payload.id !== +req.params.userId) {
         return res.status(401).send({ error: 'You can can only access yourself' });
       }
-      return User.findByPk(req.params.userId)
+      return await User.findByPk(req.params.userId)
         .then(async user => {
           if (!user) {
             return user;
@@ -72,5 +72,4 @@ module.exports = {
         console.log('UsersController.secret() called!');
         res.json({ secret: "resource" });
     },
-
 }

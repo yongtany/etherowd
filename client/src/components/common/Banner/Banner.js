@@ -66,17 +66,21 @@ class Banner extends Component  {
       });
   };
 
-  handleSignMessage = ({ publicAddress, nonce }) => {
-    return new Promise((resolve, reject) =>
-      web3.personal.sign(
-        web3.fromUtf8(`I am signing my one-time nonce: ${nonce}`),
+  handleSignMessage = async ({
+    publicAddress,
+    nonce
+  }) => {
+    try {
+      const signature = await web3.eth.personal.sign(
+        `I am signing my one-time nonce: ${nonce}`,
         publicAddress,
-        (err, signature) => {
-          if (err) return reject(err);
-          return resolve({ publicAddress, signature });
-        }
-      )
-    );
+        '' // MetaMask will ignore the password argument here
+      );
+
+      return { publicAddress, signature };
+    } catch (err) {
+      throw new Error('You need to sign the message to be able to log in.');
+    }
   };
 
   handleSignup = publicAddress => {
