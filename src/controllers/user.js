@@ -32,13 +32,57 @@ module.exports = {
         return res.status(401).send({ error: 'You can can only access yourself' });
       }
       return await User.findById(req.params.userId)
-        .then(user => res.json(user))
+        .then(user => {
+          return new Promise((resolve, reject) =>
+            // https://github.com/auth0/node-jsonwebtoken
+            jwt.sign(
+              {
+                payload: {
+                  id: user.id,
+                  publicAddress: req.query.publicAddress
+                }
+              },
+              JWT_SECRET,
+              {},
+              (err, token) => {
+                if (err) {
+                  return reject(err);
+                }
+                return resolve(token);
+              }
+            )
+          );
+        })
+        .then(accessToken => res.json({ accessToken }))
+        .catch(next)
         .catch(next);
     },
 
     create: async(req, res, next) => {
       await User.create(req.body)
-      .then((user) => res.json(user))
+      .then(user => {
+        return new Promise((resolve, reject) =>
+          // https://github.com/auth0/node-jsonwebtoken
+          jwt.sign(
+            {
+              payload: {
+                id: user.id,
+                publicAddress: req.query.publicAddress
+              }
+            },
+            JWT_SECRET,
+            {},
+            (err, token) => {
+              if (err) {
+                return reject(err);
+              }
+              return resolve(token);
+            }
+          )
+        );
+      })
+      .then(accessToken => res.json({ accessToken }))
+      .catch(next)
       .catch(next);
     },
 

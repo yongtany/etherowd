@@ -21,7 +21,7 @@ module.exports = {
         .status(400)
         .send({ error: 'Request should have signature and publicAddress' });
 
-    console.log(publicAddress, signature);
+    console.log(publicAddress);
 
     return (
       await User.findOne({ where: { publicAddress } })
@@ -39,12 +39,13 @@ module.exports = {
         // Step 2: Verify digital signature
         ////////////////////////////////////////////////////
         .then(user => {
-          if (!(user instanceof User)) {
+          if (!user) {
             // Should not happen, we should have already sent the response
             throw new Error('User is not defined in "Verify digital signature".');
           }
 
           const msg = `I am signing my one-time nonce: ${user.nonce}`;
+          console.log(msg);
 
           // We now are in possession of msg, publicAddress and signature. We
           // will use a helper from eth-sig-util to extract the address from the signature
@@ -53,6 +54,7 @@ module.exports = {
             data: msgBufferHex,
             sig: signature
           });
+          console.log(address)
 
           // The signature verification is successful if the address found with
           // sigUtil.recoverPersonalSignature matches the initial publicAddress
@@ -68,7 +70,7 @@ module.exports = {
         // Step 3: Generate a new nonce for the user
         ////////////////////////////////////////////////////
         .then(user => {
-          if (!(user instanceof User)) {
+          if (!user) {
             // Should not happen, we should have already sent the response
 
             throw new Error(
