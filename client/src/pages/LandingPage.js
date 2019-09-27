@@ -4,6 +4,7 @@ import Banner from 'components/common/Banner';
 import Services from 'components/common/Services';
 import Promise from 'components/common/Promise';
 import RecentListContainer from 'containers/project/RecentListContainer';
+import AuthContainer from 'containers/auth/AuthContainer';
 
 const LandingPage = () => {
   return (
@@ -12,6 +13,7 @@ const LandingPage = () => {
       <Services />
       <Promise />
       <RecentListContainer />
+      <AuthContainer />
     </PageTemplate>
   );
 };

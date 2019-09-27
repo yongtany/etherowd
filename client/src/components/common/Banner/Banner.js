@@ -56,9 +56,8 @@ class Banner extends Component  {
         </div>
 
         <div>
-          <AuthContainer />
-        </div>
 
+        </div>
       </section>
     )
   }
