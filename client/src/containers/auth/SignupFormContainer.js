@@ -51,21 +51,13 @@ class SignupFormContainer extends Component {
     formData.append('username', username);
     formData.append('profile_image', profile_image);
 
-
     try {
       if (
         username !== ""
       ) {
-        const user = {
-          'publicAddresss': formData.get('publicAddress'),
-          'username': formData.get('username'),
-          'profile_image': formData.get('profile_image')
-        }
-        console.log(user);
-
-        await AuthActions.signUp(user);
-        toast.error('회원가입에 성공하였습니다.');
-        history.push(`/`);
+        await AuthActions.signUp(formData);
+        toast.success('회원가입에 성공하였습니다.');
+        history.push('/projects');
       }
       else {
         toast.error('필드를 채워주세요.');

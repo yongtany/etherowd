@@ -55,16 +55,13 @@ module.exports = {
       res.status(200).json({user: req.user.toJSON(), token: token});
     },
 
-    signUp: async(req, res, next) => {
+    signUp: async (req, res) => {
       try {
-        console.log(req.file.path);
         cloudinary.uploader.upload(req.file.path, async function(result) {
-          console.log('hi');
           req.body.profile_image = result.secure_url;
-          const { publicAddress, username, profile_image } = req.value.body;
-          console.log(publicAddress);
+
+          const { publicAddress } = req.body;
           const foundUser = await User.findOne({ "publicAddress": publicAddress });
-          console.log(foundUser);
           if(foundUser) {
             return res.status(403).json({ error: 'User is already in use'});
           }
