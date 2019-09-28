@@ -4,7 +4,6 @@ import WOW from 'wow.js';
 import styles from './Banner.scss';
 import classNames from 'classnames/bind';
 
-import AuthContainer from 'containers/auth/AuthContainer';
 
 const cx = classNames.bind(styles);
 
@@ -54,9 +53,7 @@ class Banner extends Component  {
             </Link>
           </div>
         </div>
-
         <div>
-
         </div>
       </section>
     )

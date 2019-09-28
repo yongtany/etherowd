@@ -2,98 +2,96 @@ import React, { Component } from 'react';
 import SignupForm from 'components/auth/SignupForm';
 
 import web3 from 'ethereum/web3';
+import { toast } from "react-toastify";
+import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as authActions from 'store/modules/auth';
+
 
 class SignupFormContainer extends Component {
   state = {
-    loading: false
+    loading: false,
   }
 
-  handleAuthenticate = ({
-    publicAddress,
-    signature
-  }) =>
-    fetch(`/auth`, {
-      body: JSON.stringify({ publicAddress, signature }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    }).then(response => response.json());
-
-  handleClick = async () => {
-    const { onLoggedIn } = this.props;
-
+  render() {
+    const { loading } = this.state;
+    const { username, profile_image } = this.props;
+    return (
+      <SignupForm
+        loading={loading}
+        username={username}
+        profile_image={profile_image}
+        handleSubmit={this._handleSubmit}
+        onChangeInput={this.handleChangeInput}
+        onChangeFileInput={this.handleChangeFileInput}
+      />
+    );
+  }
+  _handleSubmit = async event => {
+    event.preventDefault();
+    const { username, profile_image, AuthActions, history } = this.props;
     // Check if MetaMask is installed
     if (!window.ethereum) {
-      window.alert('Please install MetaMask first.');
+      toast.error('메타마스크를 먼저 설치하세요.');
       return;
     }
 
     const coinbase = await web3.eth.getCoinbase();
     if (!coinbase) {
-      window.alert('Please activate MetaMask first.');
+      toast.error('메타마스크를 먼저 활성화 하세요.');
       return;
     }
 
     const publicAddress = coinbase.toLowerCase();
     this.setState({ loading: true });
 
-    // Look if user with current publicAddress is already present on backend
-    fetch(
-      `/users?publicAddress=${publicAddress}`
-    ).then(response => response.json())
-      // If yes, retrieve it. If no, create it.
-      .then(users =>
-        users.length ? users[0] : this.handleSignup(publicAddress)
-      )
-      // Popup MetaMask confirmation modal to sign message
-      // .then(this.handleSignMessage)
-      // // Send signature to backend on the /auth route
-      // .then(this.handleAuthenticate)
-      // Pass accessToken back to parent component (to save it in localStorage)
-      .then(onLoggedIn)
-      .catch(err => {
-        window.alert(err);
-        this.setState({ loading: false });
-      });
-  };
+    const formData = new FormData();
+    formData.append('publicAddress', publicAddress);
+    formData.append('username', username);
+    formData.append('profile_image', profile_image);
 
-  handleSignMessage = async ({
-    publicAddress,
-    nonce
-  }) => {
+
     try {
-      const signature = await web3.eth.personal.sign(
-        `I am signing my one-time nonce: ${nonce}`,
-        publicAddress,
-        '' // MetaMask will ignore the password argument here
-      );
+      if (
+        username !== ""
+      ) {
+        const user = {
+          'publicAddresss': formData.get('publicAddress'),
+          'username': formData.get('username'),
+          'profile_image': formData.get('profile_image')
+        }
+        console.log(user);
 
-      return { publicAddress, signature };
-    } catch (err) {
-      throw new Error('You need to sign the message to be able to log in.');
+        await AuthActions.signUp(user);
+        toast.error('회원가입에 성공하였습니다.');
+        history.push(`/`);
+      }
+      else {
+        toast.error('필드를 채워주세요.');
+      }
+    } catch(e) {
+      console.log(e);
     }
   };
 
-  handleSignup = publicAddress => {
-    return fetch(`/users`, {
-      body: JSON.stringify({ publicAddress }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    }).then(response => response.json());
-  };
+  handleChangeInput = ({name, value}) => {
+    const { AuthActions } = this.props;
+    AuthActions.changeInput({name, value});
+  }
 
-  render() {
-    const { loading } = this.state;
-    return (
-      <SignupForm
-        loading={loading}
-        handleClick={this.handleClick}
-      />
-    );
+  handleChangeFileInput = ({ files}) => {
+    const { AuthActions } = this.props;
+    AuthActions.changeFileInput({files});
   }
 }
 
-export default SignupFormContainer;
+export default connect(
+  (state) => ({
+    profile_image: state.auth.get('profile_image'),
+    username: state.auth.get('username')
+  }),
+  (dispatch) => ({
+    AuthActions: bindActionCreators(authActions, dispatch)
+  })
+)(withRouter(SignupFormContainer));

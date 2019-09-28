@@ -4,16 +4,15 @@ const UsersController = require('controllers/user');
 const jwt = require('express-jwt');
 const { JWT_SECRET } = require('config/keys');
 
+const { validateBody, schemas } = require('validations/validations');
+const passportSignIn = passport.authenticate('local', {session: false });
 const passportJWT = passport.authenticate('jwt', { session: false });
 
-router.route('/')
-  .get(UsersController.find);
+router.route('/signup')
+  .post(UsersController.signUp);
 
-router.route('/:userId')
-  .post(jwt({ secret: JWT_SECRET }), UsersController.get);
-
-router.route('/')
-  .post(UsersController.create);
+router.route('/signin')
+  .post(validateBody(schemas.signInSchema), passportSignIn, UsersController.signIn);
 
 router.route('/:userId')
   .patch(jwt({ secret: JWT_SECRET }), UsersController.patch);

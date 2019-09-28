@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
-const User = require('models/user');
 const { JWT_SECRET } = require('config/keys');
+const HTTPStatus = require('http-status');
+const multer = require('multer');
+
+const User = require('models/user');
+const keys = require('config/keys');
 
 signToken = user => {
   return jwt.sign({
@@ -11,79 +15,69 @@ signToken = user => {
   }, JWT_SECRET);
 }
 
+const storage = multer.diskStorage({
+  // destination: function(req, file, cb) {
+  //   cb(null, './uploads/');
+  // },
+  filename: function(req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const cloudinary = require('cloudinary');
+cloudinary.config({
+  cloud_name: 'djs4injum',
+  api_key: keys.cloudClientID,
+  api_secret: keys.cloudSecret
+});
+
 module.exports = {
-    find: async (req, res, next) => {
-      // If a query string ?publicAddress=... is given, then filter results
-      const whereClause = req.query &&
-        req.query.publicAddress && {
-          where: { publicAddress: req.query.publicAddress }
-        };
+    upload : multer({
+      storage: storage,
+      limits : {
+        fileSize: 1024 * 1024 * 5
+      },
+      fileFilter: fileFilter
+    }),
 
-      return await User.find(whereClause)
-        .then(users => res.json(users))
-        .catch(next);
+    signIn: async(req, res, next) => {
+      // Generate token
+      const token = signToken(req.user);
+      res.status(200).json({user: req.user.toJSON(), token: token});
     },
 
-    get: async(req, res, next) => {
-      // AccessToken payload is in req.user.payload, especially its `id` field
-      // UserId is the param in /users/:userId
-      // We only allow user accessing herself, i.e. require payload.id==userId
-      if ((req).user.payload.id !== +req.params.userId) {
-        return res.status(401).send({ error: 'You can can only access yourself' });
+    signUp: async(req, res, next) => {
+      try {
+        console.log(req.file.path);
+        cloudinary.uploader.upload(req.file.path, async function(result) {
+          console.log('hi');
+          req.body.profile_image = result.secure_url;
+          const { publicAddress, username, profile_image } = req.value.body;
+          console.log(publicAddress);
+          const foundUser = await User.findOne({ "publicAddress": publicAddress });
+          console.log(foundUser);
+          if(foundUser) {
+            return res.status(403).json({ error: 'User is already in use'});
+          }
+
+          const newUser = await User.createUser(req.body, req.body.profile_image)
+
+          const token = signToken(newUser);
+          // Response with token
+          res.status(HTTPStatus.CREATED).json({ newUser, token });
+        });
+      } catch(e) {
+        return res.status(HTTPStatus.BAD_REQUEST).json(e);
       }
-      return await User.findById(req.params.userId)
-        .then(user => {
-          return new Promise((resolve, reject) =>
-            // https://github.com/auth0/node-jsonwebtoken
-            jwt.sign(
-              {
-                payload: {
-                  id: user.id,
-                  publicAddress: req.query.publicAddress
-                }
-              },
-              JWT_SECRET,
-              {},
-              (err, token) => {
-                if (err) {
-                  return reject(err);
-                }
-                return resolve(token);
-              }
-            )
-          );
-        })
-        .then(accessToken => res.json({ accessToken }))
-        .catch(next)
-        .catch(next);
-    },
-
-    create: async(req, res, next) => {
-      await User.create(req.body)
-      .then(user => {
-        return new Promise((resolve, reject) =>
-          // https://github.com/auth0/node-jsonwebtoken
-          jwt.sign(
-            {
-              payload: {
-                id: user.id,
-                publicAddress: req.query.publicAddress
-              }
-            },
-            JWT_SECRET,
-            {},
-            (err, token) => {
-              if (err) {
-                return reject(err);
-              }
-              return resolve(token);
-            }
-          )
-        );
-      })
-      .then(accessToken => res.json({ accessToken }))
-      .catch(next)
-      .catch(next);
     },
 
     patch:  async(req, res, next) => {

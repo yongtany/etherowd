@@ -7,7 +7,7 @@ const LoginForm = props => {
         {props.loading ? 'Loading...' : 'Login with MetaMask'}
         <img
           src={require('images/metamask-icon.png')}
-          class="mm-icon"
+          className="mm-icon"
           alt="metamask"
         />
       </button>

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import LoginForm from 'components/auth/LoginForm';
 
 import web3 from 'ethereum/web3';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 class LoginFormContainer extends Component {
   state = {
@@ -21,17 +24,17 @@ class LoginFormContainer extends Component {
     }).then(response => response.json());
 
   handleClick = async () => {
-    const { onLoggedIn } = this.props;
+    const { isLoggedIn } = this.props;
 
     // Check if MetaMask is installed
     if (!window.ethereum) {
-      window.alert('Please install MetaMask first.');
+      toast.error('메타마스크를 먼저 설치하세요.');
       return;
     }
 
     const coinbase = await web3.eth.getCoinbase();
     if (!coinbase) {
-      window.alert('Please activate MetaMask first.');
+      toast.error('메타마스크를 먼저 활성화 하세요.');
       return;
     }
 
@@ -44,46 +47,21 @@ class LoginFormContainer extends Component {
     ).then(response => response.json())
       // If yes, retrieve it. If no, create it.
       .then(users =>
-        users.length ? users[0] : this.handleSignup(publicAddress)
+        users.length ? users[0] : toast.error('등록된 회원이 없습니다.')
       )
       // Popup MetaMask confirmation modal to sign message
       // .then(this.handleSignMessage)
       // // Send signature to backend on the /auth route
       // .then(this.handleAuthenticate)
       // Pass accessToken back to parent component (to save it in localStorage)
-      .then(onLoggedIn)
+      .then(isLoggedIn)
+      .then(this.setState({ loading: false }))
       .catch(err => {
         window.alert(err);
         this.setState({ loading: false });
       });
   };
 
-  handleSignMessage = async ({
-    publicAddress,
-    nonce
-  }) => {
-    try {
-      const signature = await web3.eth.personal.sign(
-        `I am signing my one-time nonce: ${nonce}`,
-        publicAddress,
-        '' // MetaMask will ignore the password argument here
-      );
-
-      return { publicAddress, signature };
-    } catch (err) {
-      throw new Error('You need to sign the message to be able to log in.');
-    }
-  };
-
-  handleSignup = publicAddress => {
-    return fetch(`/users`, {
-      body: JSON.stringify({ publicAddress }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    }).then(response => response.json());
-  };
   render() {
     const { loading } = this.state;
     return (
@@ -95,4 +73,9 @@ class LoginFormContainer extends Component {
   }
 }
 
-export default LoginFormContainer;
+export default connect(
+  (state) => ({
+    isLoggedIn: state.auth.get('isLoggedIn'),
+    token: state.auth.get('token'),
+  }),
+)(withRouter(LoginFormContainer));

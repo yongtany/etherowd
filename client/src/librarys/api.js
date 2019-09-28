@@ -1,6 +1,13 @@
+import axios from 'axios';
 import factory from 'ethereum/factory';
 import Project from 'ethereum/project';
 
+// About User
+export const signUp = (formData) => axios.post('/users/signup', formData, {headers: {'content-type': 'multipart/form-data'}});
+export const signIn = ({ publicAress }) => axios.post('/users/signin', { publicAress });
+
+
+// About Proeject
 export const getProjectList = async () => {
   const list = await factory.methods.getDeployedProjects().call();
   const projects = list.reverse();
