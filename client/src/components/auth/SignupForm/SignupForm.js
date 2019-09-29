@@ -42,16 +42,24 @@ class SignupForm extends Component {
             onChange={handleFileChange}
           />
         </div>
-        <input
+        {loading ? <button className="Login-button Login-mm">
+          <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          로딩중...
+        </button>
+        :
+        <button
           className="Login-button Login-mm"
           type="submit"
           name="Submit"
-        />
-          {/* <img
+        >
+          Login with MetaMask
+          <img
               src={require('images/metamask-icon.png')}
               className="mm-icon"
               alt="metamask"
-            /> */}
+            />
+          </button>
+        }
       </form>
     )
   }

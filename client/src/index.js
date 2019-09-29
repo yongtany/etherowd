@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import App from 'components/App';
+import AppContainer from 'containers/AppContainer';
 import { Provider } from 'react-redux';
 import configure from './store/configure';
 import * as serviceWorker from './serviceWorker';
@@ -13,7 +13,7 @@ const store = configure();
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter >
-      <App />
+      <AppContainer />
     </BrowserRouter>
   </Provider>,
  document.getElementById('root'));

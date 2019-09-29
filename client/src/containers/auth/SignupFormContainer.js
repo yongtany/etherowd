@@ -8,7 +8,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as authActions from 'store/modules/auth';
 
-
 class SignupFormContainer extends Component {
   state = {
     loading: false,
@@ -28,6 +27,7 @@ class SignupFormContainer extends Component {
       />
     );
   }
+
   _handleSubmit = async event => {
     event.preventDefault();
     const { username, profile_image, AuthActions, history } = this.props;
@@ -56,8 +56,10 @@ class SignupFormContainer extends Component {
         username !== ""
       ) {
         await AuthActions.signUp(formData);
+        history.push('/');
+        window.location.reload();
         toast.success('회원가입에 성공하였습니다.');
-        history.push('/projects');
+        this.setState({ loading: false });
       }
       else {
         toast.error('필드를 채워주세요.');

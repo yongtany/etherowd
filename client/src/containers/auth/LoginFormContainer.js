@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import LoginForm from 'components/auth/LoginForm';
-
 import web3 from 'ethereum/web3';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -11,20 +10,9 @@ class LoginFormContainer extends Component {
     loading: false
   }
 
-  handleAuthenticate = ({
-    publicAddress,
-    signature
-  }) =>
-    fetch(`/auth`, {
-      body: JSON.stringify({ publicAddress, signature }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    }).then(response => response.json());
-
-  handleClick = async () => {
-    const { isLoggedIn } = this.props;
+  handleClick = async event => {
+    event.preventDefault();
+    const { AuthActions, history } = this.props;
 
     // Check if MetaMask is installed
     if (!window.ethereum) {
@@ -41,25 +29,15 @@ class LoginFormContainer extends Component {
     const publicAddress = coinbase.toLowerCase();
     this.setState({ loading: true });
 
-    // Look if user with current publicAddress is already present on backend
-    fetch(
-      `/users?publicAddress=${publicAddress}`
-    ).then(response => response.json())
-      // If yes, retrieve it. If no, create it.
-      .then(users =>
-        users.length ? users[0] : toast.error('등록된 회원이 없습니다.')
-      )
-      // Popup MetaMask confirmation modal to sign message
-      // .then(this.handleSignMessage)
-      // // Send signature to backend on the /auth route
-      // .then(this.handleAuthenticate)
-      // Pass accessToken back to parent component (to save it in localStorage)
-      .then(isLoggedIn)
-      .then(this.setState({ loading: false }))
-      .catch(err => {
-        window.alert(err);
-        this.setState({ loading: false });
-      });
+    try {
+      await AuthActions.signUp(publicAddress);
+      toast.success('로그인하였습니다.');
+      history.push('/');
+      window.location.reload();
+
+    } catch(e) {
+      toast.error('등록된 회원이 없습니다.');
+    }
   };
 
   render() {

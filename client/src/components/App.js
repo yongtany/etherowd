@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthContainer from 'containers/auth/AuthContainer';
 
 import {
   LandingPage,
@@ -14,6 +15,18 @@ import {
 
 
 const PublicRoutes = () => (
+  <div>
+    <Switch>
+      <Route exact path="/" component={LandingPage} />
+      <Route exact path="/projects" component={ListPage}/>
+      <Route exact path="/project/:id" component={ProjectPage}/>
+    </Switch>
+    <AuthContainer />
+  </div>
+
+);
+
+const PrivateRoutes = () => (
   <Switch>
     <Route exact path="/" component={LandingPage} />
     <Route exact path="/projects" component={ListPage}/>
@@ -26,7 +39,10 @@ const PublicRoutes = () => (
 
 const App = props => (
   <div>
-    <PublicRoutes />
+    {props.isLoggedIn ?
+      <PrivateRoutes/>
+     : <PublicRoutes />
+     }
     <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
   </div>
 );
