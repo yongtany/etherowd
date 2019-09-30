@@ -8,10 +8,6 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 class Banner extends Component  {
-  state = {
-    loading: false, // Loading button state
-  };
-
   componentDidMount() {
     new WOW().init();
   }

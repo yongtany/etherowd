@@ -11,6 +11,7 @@ const userSchema = Schema({
   },
   username: {
     type: String,
+    unique: true
   },
   profile_image: {
     type: String,

@@ -23,9 +23,8 @@ const initialState = Map({
   isLoggedIn: localStorage.getItem("jwt") ? true : false,
   token: localStorage.getItem("jwt"),
   profile_image: localStorage.getItem("profile_image"),
-  uesrname: localStorage.getItem('username')
+  username: localStorage.getItem('username')
 });
-
 
 // reducer
 export default handleActions({
@@ -61,13 +60,15 @@ export default handleActions({
     type: AUTH_SIGN_IN,
     onSuccess: (state, action) => {
       const { token, user } = action.payload.data;
-      const { profile_image } = user
+      const { profile_image, username } = user
       localStorage.setItem("jwt", token);
       localStorage.setItem("profile_image", profile_image);
+      localStorage.setItem("username", username);
       axios.defaults.headers.common['Authorization'] = action.payload.data.token;
       return state.set('isLoggedIn', true)
                   .set('token', token)
                   .set('profile_image', profile_image)
+                  .set('username', username)
     },
     onError: (state, action) => {
       return state.set('errorMessage', 'Sign in Faild')

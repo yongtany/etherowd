@@ -16,6 +16,7 @@ class SignupFormContainer extends Component {
   render() {
     const { loading } = this.state;
     const { username, profile_image } = this.props;
+
     return (
       <SignupForm
         loading={loading}

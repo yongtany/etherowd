@@ -23,7 +23,7 @@ const PrivateNav = props => (
               <img src={props.profile_image} alt={props.username} />
             </Link>
             <div className="dropdown-menu">
-              <Link className="dropdown-item" to="/profile">{props.username}</Link>
+              <Link className="dropdown-item username" to="/profile">{props.username}</Link>
               <div className="dropdown-item logout" onClick={props.signOut}>Log out</div>
             </div>
           </li>

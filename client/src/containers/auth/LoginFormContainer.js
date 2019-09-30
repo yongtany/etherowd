@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import LoginForm from 'components/auth/LoginForm';
 import web3 from 'ethereum/web3';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { toast } from "react-toastify";
+import * as authActions from 'store/modules/auth';
 
 class LoginFormContainer extends Component {
   state = {
@@ -28,9 +30,10 @@ class LoginFormContainer extends Component {
 
     const publicAddress = coinbase.toLowerCase();
     this.setState({ loading: true });
+    console.log(publicAddress);
 
     try {
-      await AuthActions.signUp(publicAddress);
+      await AuthActions.signIn(publicAddress);
       toast.success('로그인하였습니다.');
       history.push('/');
       window.location.reload();
@@ -38,6 +41,7 @@ class LoginFormContainer extends Component {
     } catch(e) {
       toast.error('등록된 회원이 없습니다.');
     }
+    this.setState({ loading: false });
   };
 
   render() {
@@ -52,8 +56,8 @@ class LoginFormContainer extends Component {
 }
 
 export default connect(
-  (state) => ({
-    isLoggedIn: state.auth.get('isLoggedIn'),
-    token: state.auth.get('token'),
-  }),
+  null,
+  (dispatch) => ({
+    AuthActions: bindActionCreators(authActions, dispatch)
+  })
 )(withRouter(LoginFormContainer));

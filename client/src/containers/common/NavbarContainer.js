@@ -12,8 +12,7 @@ class NavbarContainer extends Component {
   }
 
   render() {
-    const { isLoggedIn, profile_image, username} = this.props;
-
+    const { isLoggedIn, profile_image, username } = this.props;
     return (
       <Navbar
        isLoggedIn={isLoggedIn}
@@ -28,8 +27,8 @@ class NavbarContainer extends Component {
 export default connect(
   (state) => ({
     isLoggedIn: state.auth.get('isLoggedIn'),
+    username: state.auth.get('username'),
     profile_image: state.auth.get('profile_image'),
-    username: state.auth.get('username')
   }),
   (dispatch) => ({
     AuthActions: bindActionCreators(authActions, dispatch)
