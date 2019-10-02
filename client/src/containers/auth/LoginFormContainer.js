@@ -42,8 +42,8 @@ class LoginFormContainer extends Component {
     try {
       await AuthActions.signIn(object);
 
-      history.push('/');
       window.location.reload();
+      history.push('/');
       toast.success('로그인하였습니다.');
 
     } catch(e) {

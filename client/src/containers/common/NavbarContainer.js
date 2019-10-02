@@ -8,9 +8,10 @@ import * as authActions from 'store/modules/auth';
 
 class NavbarContainer extends Component {
   handleSignOut = () => {
-    const { AuthActions } = this.props;
+    const { AuthActions, history } = this.props;
     toast.success('성공적으로 로그아웃 하셨습니다.');
     AuthActions.signOut();
+    history.push('/');
   }
 
   render() {
