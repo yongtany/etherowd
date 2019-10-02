@@ -19,7 +19,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-
 // Routes
 app.use('/users', require('routes/users.routes'));
 app.use('/auth', require('routes/auth.routes'));

@@ -3,11 +3,13 @@ import Navbar from 'components/common/Navbar';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { toast } from "react-toastify";
 import * as authActions from 'store/modules/auth';
 
 class NavbarContainer extends Component {
   handleSignOut = () => {
     const { AuthActions } = this.props;
+    toast.success('성공적으로 로그아웃 하셨습니다.');
     AuthActions.signOut();
   }
 

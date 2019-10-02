@@ -9,7 +9,7 @@ import * as authActions from 'store/modules/auth';
 
 class LoginFormContainer extends Component {
   state = {
-    loading: false
+    loading: false,
   }
 
   handleClick = async event => {
@@ -29,14 +29,22 @@ class LoginFormContainer extends Component {
     }
 
     const publicAddress = coinbase.toLowerCase();
+
     this.setState({ loading: true });
-    console.log(publicAddress);
+
+    const formData = new FormData();
+    formData.append('publicAddress', publicAddress);
+
+    const object = {
+      'publicAddress': formData.get('publicAddress')
+    };
 
     try {
-      await AuthActions.signIn(publicAddress);
-      toast.success('로그인하였습니다.');
+      await AuthActions.signIn(object);
+
       history.push('/');
       window.location.reload();
+      toast.success('로그인하였습니다.');
 
     } catch(e) {
       toast.error('등록된 회원이 없습니다.');

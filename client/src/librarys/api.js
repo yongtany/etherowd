@@ -3,9 +3,8 @@ import factory from 'ethereum/factory';
 import Project from 'ethereum/project';
 
 // About User
-export const signUp = (formData) => axios.post('/users/signup/', formData, {headers: {'content-type': 'multipart/form-data'}});
-export const signIn = ({ publicAddress }) => axios.post('/users/signin', { publicAddress });
-
+export const signUp = (formData) => axios.post('/users/signup/', formData, {headers: {'Content-type': 'multipart/form-data'}});
+export const signIn = (jsonObject) => axios.post('/users/signin/', jsonObject, {headers: { 'Content-Type': 'application/json' }});
 
 // About Proeject
 export const getProjectList = async () => {

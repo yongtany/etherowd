@@ -13,7 +13,7 @@ router.route('/signup')
     UsersController.signUp);
 
 router.route('/signin')
-  .post(passportSignIn, UsersController.signIn);
+  .post(UsersController.signIn);
 
 router.route('/:userId')
   .patch(jwt({ secret: JWT_SECRET }), UsersController.patch);

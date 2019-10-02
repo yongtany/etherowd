@@ -29,10 +29,11 @@ passport.use(new JwtStrategy({
 
 // LOCAL STRATEGY
 passport.use(new LocalStrategy({
-  publicAddressField: 'publicAddress'
-}, async (publicAddress, done) => {
+  usernameField: 'publicAddress'
+}, async ({publicAddress}, done) => {
   try {
-    // Find the user given the email
+    // Find the user given the publicAddress
+    console.log(publicAddress)
     const user = await User.findOne({ "publicAddress": publicAddress });
 
     // If not, handle it

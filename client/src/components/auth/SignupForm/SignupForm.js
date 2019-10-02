@@ -24,7 +24,7 @@ class SignupForm extends Component {
     return (
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label to="exampleFormControlInput1">닉네임을 입력하세요.</label>
+          <label to="username">닉네임을 입력하세요.</label>
           <input
             type="text"
             className="form-control"
@@ -34,7 +34,7 @@ class SignupForm extends Component {
             placeholder="닉네임 입력" />
         </div>
         <div className="form-group">
-          <label to="exampleFormControlFile1">프로필 이미지를 선택하세요.</label>
+          <label to="proflie_image">프로필 이미지를 선택하세요.</label>
           <input
             type="file"
             className="form-control-file"

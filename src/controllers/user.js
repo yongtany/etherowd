@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('config/keys');
 const HTTPStatus = require('http-status');
 const multer = require('multer');
-
 const User = require('models/user');
 const keys = require('config/keys');
 
@@ -50,9 +49,20 @@ module.exports = {
     }),
 
     signIn: async(req, res, next) => {
-      // Generate token
-      const token = signToken(req.user);
-      res.status(200).json({user: req.user.toJSON(), token: token});
+      try {
+        // Generate token
+        const { publicAddress } = req.body
+        const user = await User.findOne({ "publicAddress": publicAddress });
+        // If not, handle it
+        if(!user) {
+          return done(null, false);
+        }
+
+        const token = signToken(user);
+        res.status(200).json({user: user.toJSON(), token: token});
+      } catch(e) {
+        return res.status(HTTPStatus.BAD_REQUEST).json(e);
+      }
     },
 
     signUp: async (req, res) => {
