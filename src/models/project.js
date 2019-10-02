@@ -47,7 +47,7 @@ projectSchema.methods = {
   },
 };
 
-postSchema.statics = {
+projectSchema.statics = {
   createPost(args, user, projectImage) {
     return this.create({
       ...args,

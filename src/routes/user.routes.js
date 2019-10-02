@@ -5,7 +5,7 @@ const jwt = require('express-jwt');
 const { JWT_SECRET } = require('config/keys');
 
 const passportConf = require('services/passport');
-const passportSignIn = passport.authenticate('local', {session: false });
+// const passportSignIn = passport.authenticate('local', {session: false });
 const passportJWT = passport.authenticate('jwt', { session: false });
 
 router.route('/signup')

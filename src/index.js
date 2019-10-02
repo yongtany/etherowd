@@ -20,7 +20,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // Routes
-app.use('/users', require('routes/users.routes'));
+app.use('/users', require('routes/user.routes'));
+app.use('/projects', require('routes/project.routes'));
 
 // Server start
 app.listen(process.env.PORT || 5000, err => {
