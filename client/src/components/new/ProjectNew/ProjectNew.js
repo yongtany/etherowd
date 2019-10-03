@@ -3,7 +3,7 @@ import styles from './ProjectNew.scss';
 import classNames from 'classnames/bind';
 
 import LoadingButton from 'components/common/LoadingButton';
-
+import Editor from 'components/new/Editor';
 const cx = classNames.bind(styles);
 
 const ProjectNew = props => (
@@ -15,7 +15,7 @@ const ProjectNew = props => (
             <p className={cx('text-muted')}>프로젝트를 개설하세요.</p>
           </div>
           <div className={cx('new-content')}>
-            <form onSubmit={props.onSubmit}>
+            <form onSubmit={props.onSubmit} className={cx('form-wrapper')}>
               <div className="form-group">
                 <label>목표금액을 설정하세요.</label>
                 <input
@@ -27,12 +27,13 @@ const ProjectNew = props => (
                 />
                 <small id="Help" className="form-text text-muted">목표금액에 도달해야 프로젝트를 진행하실수 있습니다.</small>
               </div>
+              <Editor />
               {
                 props.loading ?
                   <LoadingButton
                     type={"primary"}
                   />
-                : <button className="btn btn-primary">Create!</button>
+                : <button className="btn btn-primary">개설하기</button>
               }
             </form>
           </div>
