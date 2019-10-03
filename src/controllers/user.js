@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('config/keys');
 const HTTPStatus = require('http-status');
-const multer = require('multer');
 const User = require('models/user');
-const keys = require('config/keys');
+const { cloudinary } = require('services/upload');
 
 signToken = user => {
   return jwt.sign({
@@ -14,40 +13,7 @@ signToken = user => {
   }, JWT_SECRET);
 }
 
-const storage = multer.diskStorage({
-  // destination: function(req, file, cb) {
-  //   cb(null, './uploads/');
-  // },
-  filename: function(req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname);
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  // reject a file
-  if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
-const cloudinary = require('cloudinary');
-cloudinary.config({
-  cloud_name: 'djs4injum',
-  api_key: keys.cloudClientID,
-  api_secret: keys.cloudSecret
-});
-
 module.exports = {
-    upload : multer({
-      storage: storage,
-      limits : {
-        fileSize: 1024 * 1024 * 5
-      },
-      fileFilter: fileFilter
-    }),
-
     signIn: async(req, res, next) => {
       try {
         // Generate token

@@ -1,6 +1,7 @@
 const router = require('express-promise-router')();
 const passport = require('passport');
 const UsersController = require('controllers/user');
+const Uploader = require('services/upload');
 const jwt = require('express-jwt');
 const { JWT_SECRET } = require('config/keys');
 
@@ -9,7 +10,7 @@ const passportConf = require('services/passport');
 const passportJWT = passport.authenticate('jwt', { session: false });
 
 router.route('/signup')
-  .post(UsersController.upload.single('profile_image'),
+  .post(Uploader.upload.single('profile_image'),
     UsersController.signUp);
 
 router.route('/signin')
