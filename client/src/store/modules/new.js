@@ -1,21 +1,23 @@
 import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 import { pender } from 'redux-pender';
-import * as api from 'librarys/api';
 
 // action types
-const INITIALIZE = 'editor/INITIALIZE';
-const CHANGE_INPUT = 'editor/CHANGE_INPUT';
-const CREATE_PROJECT = 'editor/WRITE_POST';
+const INITIALIZE = 'new/INITIALIZE';
+const CHANGE_INPUT = 'new/CHANGE_INPUT';
+const CREATE_PROJECT = 'new/WRITE_POST';
 
 // action creators
 export const initialize = createAction(INITIALIZE);
 export const changeInput = createAction(CHANGE_INPUT);
-export const createProject = createAction(CREATE_PROJECT, api.createProject);
+export const createProject = createAction(CREATE_PROJECT);
 
 // initial state
 const initialState = Map({
   minimumcontribution: '',
+  title: '',
+  detail: '',
+  pictures: [],
   errorMessage: '',
 });
 

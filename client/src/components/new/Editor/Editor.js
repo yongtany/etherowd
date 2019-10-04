@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import styles from './Editor.scss';
-import classNames from 'classnames/bind';
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List  from '@editorjs/list';
 import Embed  from '@editorjs/embed';
-import SimpleImage from '@editorjs/image';
-
-const cx = classNames.bind(styles);
 
 class Editor extends Component {
   state = {
-    articleHTML: ''
+    detail: ''
   }
 
   componentDidMount() {
@@ -30,12 +26,6 @@ class Editor extends Component {
             'bold'
           ]
         },
-        image: {
-          class: SimpleImage,
-          inlineToolbar: [
-            'link'
-          ]
-        },
         embed: {
           class: Embed,
           inlineToolbar: false,
@@ -50,12 +40,12 @@ class Editor extends Component {
     });
   }
 
-  handleSave = (event) => {
+  handleSave = () => {
     this.editor.save().then((outputData) => {
       outputData.blocks.map(obj => {
         switch (obj.type) {
           case 'paragraph':
-            this.articleHTML += `<div class="ce-block">
+            this.detail += `<div class="ce-block">
               <div class="ce-block__content">
                 <div class="ce-paragraph cdx-block">
                   <p>${obj.data.text}</p>
@@ -64,7 +54,7 @@ class Editor extends Component {
             </div>\n`;
             break;
           case 'image':
-            this.articleHTML += `<div class="ce-block">
+            this.detail += `<div class="ce-block">
               <div class="ce-block__content">
                 <div class="ce-paragraph cdx-block">
                   <img src="${obj.data.url}" alt="${obj.data.caption}" />
@@ -76,7 +66,7 @@ class Editor extends Component {
             </div>\n`;
             break;
           case 'header':
-            this.articleHTML += `<div class="ce-block">
+            this.detail += `<div class="ce-block">
               <div class="ce-block__content">
                 <div class="ce-paragraph cdx-block">
                   <h${obj.data.level}>${obj.data.text}</h${obj.data.level}>
@@ -85,7 +75,7 @@ class Editor extends Component {
             </div>\n`;
             break;
           case 'raw':
-            this.articleHTML += `<div class="ce-block">
+            this.detail += `<div class="ce-block">
             <div class="ce-block__content">
               <div class="ce-code">
                 <code>${obj.data.html}</code>
@@ -94,7 +84,7 @@ class Editor extends Component {
           </div>\n`;
             break;
           case 'code':
-            this.articleHTML += `<div class="ce-block">
+            this.detail += `<div class="ce-block">
               <div class="ce-block__content">
                 <div class="ce-code">
                   <code>${obj.data.code}</code>
@@ -107,7 +97,7 @@ class Editor extends Component {
               const list = obj.data.items.map(item => {
                 return `<li class="cdx-list__item">${item}</li>`;
               });
-              this.articleHTML += `<div class="ce-block">
+              this.detail += `<div class="ce-block">
                 <div class="ce-block__content">
                   <div class="ce-paragraph cdx-block">
                     <ul class="cdx-list--unordered">${list.join('')}</ul>
@@ -118,7 +108,7 @@ class Editor extends Component {
               const list = obj.data.items.map(item => {
                 return `<li class="cdx-list__item">${item}</li>`;
               });
-              this.articleHTML += `<div class="ce-block">
+              this.detail += `<div class="ce-block">
                 <div class="ce-block__content">
                   <div class="ce-paragraph cdx-block">
                     <ol class="cdx-list--ordered">${list}</ol>
@@ -128,7 +118,7 @@ class Editor extends Component {
             }
             break;
           case 'delimeter':
-            this.articleHTML += `<div class="ce-block">
+            this.detail += `<div class="ce-block">
               <div class="ce-block__content">
                 <div class="ce-delimiter cdx-block"></div>
               </div>
@@ -139,9 +129,9 @@ class Editor extends Component {
         }
       });
       this.setState({
-        articleHTML: this.articleHTML
+        detail: this.detail
       })
-      console.log(this.articleHTML);
+      console.log(this.detail);
     }).catch((error) => {
       console.log(error);
     })
@@ -154,7 +144,7 @@ class Editor extends Component {
       <div>
         <h5>상세 설명</h5>
         <div id="editorjs"></div>
-        <button onClick={this.handleSave}>Submit</button>
+        <button onClick={this.handleSave}>저장하기</button>
       </div>
     )
   }

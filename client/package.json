@@ -16,6 +16,7 @@
     "query-string": "^6.5.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-images-upload": "^1.2.7",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
