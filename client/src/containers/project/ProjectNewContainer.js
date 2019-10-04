@@ -7,13 +7,15 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toast } from "react-toastify";
 
+
 class ProjectNewContainer extends Component {
   state = {
     minimumContribution: '',
     errorMessage: '',
     loading: false,
     file: '',
-    imagePreviewUrl: ''
+    imagePreviewUrl: '',
+    tags: []
   };
   handleImageChange = this.handleImageChange.bind(this);
 
@@ -37,6 +39,10 @@ class ProjectNewContainer extends Component {
     }
 
     reader.readAsDataURL(file)
+  }
+
+  handleTagsChange = (tags) => {
+    this.setState({tags})
   }
 
   onSubmit = async event => {
@@ -70,9 +76,8 @@ class ProjectNewContainer extends Component {
 
 
   render() {
-    const { onChange, onSubmit, handleImageChange } = this;
-    const { minimumContribution, errorMessage, loading } = this.state;
-    let {imagePreviewUrl} = this.state;
+    const { onChange, onSubmit, handleImageChange, handleTagsChange } = this;
+    const { minimumContribution, errorMessage, loading, tags, imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl}  className='img-preview thumbnail' alt={'hi'}/>);
@@ -85,8 +90,10 @@ class ProjectNewContainer extends Component {
         loading={loading}
         onChange={onChange}
         handleImageChange={handleImageChange}
+        handleTagsChange={handleTagsChange}
         onSubmit={onSubmit}
         imagePreview={$imagePreview}
+        tags={tags}
        />
     );
   }
@@ -97,5 +104,6 @@ export default connect(
     title: state.new.get('title'),
     detail: state.new.get('detail'),
     pictures: state.new.get('pictures'),
+    tags: state.new.get('tags')
   })
 )(withRouter(ProjectNewContainer));

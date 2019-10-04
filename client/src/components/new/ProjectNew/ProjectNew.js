@@ -4,7 +4,11 @@ import classNames from 'classnames/bind';
 
 import LoadingButton from 'components/common/LoadingButton';
 import Editor from 'components/new/Editor';
-import ImageUploader from 'react-images-upload';
+
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
+
+
 const cx = classNames.bind(styles);
 
 const ProjectNew = props => (
@@ -21,7 +25,7 @@ const ProjectNew = props => (
                 <div className="container">
                   <div className="row">
                     <div className={cx('col-sm-6')}>
-                      <label>제목을 입력하세요.</label>
+                      <label className="input-label">제목을 입력하세요.</label>
                       <input
                         className="form-control"
                         value={props.title}
@@ -29,9 +33,9 @@ const ProjectNew = props => (
                         name="title"
                         placeholder="Title"
                       />
-                      <small id="Help" className="form-text text-muted">목표금액에 도달해야 프로젝트를 진행하실수 있습니다.</small>
-                      <label>목표금액을 설정하세요.</label>
+                      <small id="Help" className="form-text text-muted">프로젝트 제목을 입력하세요.</small>
 
+                      <label className="input-label">최소투자액 설정하세요.</label>
                       <input
                         className="form-control"
                         value={props.minimumContribution}
@@ -39,20 +43,27 @@ const ProjectNew = props => (
                         name="minimumContribution"
                         placeholder="Ether"
                       />
-                      <small id="Help" className="form-text text-muted">목표금액에 도달해야 프로젝트를 진행하실수 있습니다.</small>
+                      <small id="Help" className="form-text text-muted">투자자들은 이 최소투자액부터 투자 가능합니다.</small>
+
+                      <label className="input-label">태그를 입력하세요.</label>
+                      <TagsInput
+                        value={props.tags}
+                        onChange={props.handleTagsChange}
+                       />
+                       <small id="Help" className="form-text text-muted">태그를 통해 투자자들에게 검색됩니다.</small>
                     </div>
                     <div className="col-sm-6">
-                      <div class="form-group">
-                        <label>프로젝트 이미지를 등록하세요.</label>
-                        <div class="main-img-preview">
+                      <div className="form-group">
+                        <label className="input-label">프로젝트 이미지를 등록하세요.</label>
+                        <div className="main-img-preview">
                           {props.imagePreview}
                         </div>
-                        <div class="input-group">
-                          <input id="fakeUploadLogo" class="form-control fake-shadow" placeholder="Choose File" disabled="disabled" />
-                          <div class="input-group-btn">
-                            <div class="fileUpload btn btn-danger fake-shadow">
-                              <span><i class="glyphicon glyphicon-upload"></i> Upload Logo</span>
-                              <input id="logo-id" name="logo" type="file" onChange={props.handleImageChange} class="attachment_upload" />
+                        <div className="input-group">
+                          <input id="fakeUploadLogo" className="form-control fake-shadow" placeholder="Choose File" disabled="disabled" />
+                          <div className="input-group-btn">
+                            <div className="fileUpload btn btn-danger fake-shadow">
+                              <span><i className="glyphicon glyphicon-upload"></i> Upload Logo</span>
+                              <input id="logo-id" name="logo" type="file" onChange={props.handleImageChange} className="attachment_upload" />
                             </div>
                           </div>
                         </div>

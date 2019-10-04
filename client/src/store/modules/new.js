@@ -18,6 +18,7 @@ const initialState = Map({
   title: '',
   detail: '',
   pictures: [],
+  tags: [],
   errorMessage: '',
 });
 
