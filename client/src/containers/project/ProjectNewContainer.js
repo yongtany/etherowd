@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import ProjectNew from 'components/new/ProjectNew';
 import factory from 'ethereum/factory';
 import web3 from 'ethereum/web3';
-
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toast } from "react-toastify";
+import * as api from 'librarys/api';
 
 
 class ProjectNewContainer extends Component {
@@ -13,8 +13,10 @@ class ProjectNewContainer extends Component {
     minimumContribution: '',
     errorMessage: '',
     loading: false,
-    file: '',
+    project_image: '',
     imagePreviewUrl: '',
+    title:'',
+    body: '',
     tags: []
   };
   handleImageChange = this.handleImageChange.bind(this);
@@ -29,36 +31,48 @@ class ProjectNewContainer extends Component {
     e.preventDefault();
 
     let reader = new FileReader();
-    let file = e.target.files[0];
+    let project_image = e.target.files[0];
 
     reader.onloadend = () => {
       this.setState({
-        file: file,
+        project_image: project_image,
         imagePreviewUrl: reader.result
       });
     }
 
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(project_image)
   }
 
   handleTagsChange = (tags) => {
     this.setState({tags})
   }
 
-  onSubmit = async event => {
+  handleSubmit = async event => {
     event.preventDefault();
     const { history } = this.props;
     this.setState({ loading: true, errorMessage: '' });
-    const { minimumContribution } = this.state;
+    const { title, body, project_image, tags, minimumContribution } = this.state;
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('body', body);
+    formData.append('project_image', project_image);
+    for (var i = 0; i < tags.length; i++) {
+      formData.append('tags', tags[i]);
+    }
 
     try {
       if (typeof parseInt(minimumContribution) === 'number' && minimumContribution !== '') {
         const accounts = await web3.eth.getAccounts();
+
+        await api.createProject(formData);
         await factory.methods
-          .createProject(this.state.minimumContribution)
+          .createProject(minimumContribution)
           .send({
             from: accounts[0]
           });
+
+
 
         history.push('/projects');
         toast.success("프로젝트가 생성되었습니다.");
@@ -66,7 +80,6 @@ class ProjectNewContainer extends Component {
       else {
         toast.error('금액을 정확히 입력해주세요.');
       }
-
 
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -76,22 +89,28 @@ class ProjectNewContainer extends Component {
 
 
   render() {
-    const { onChange, onSubmit, handleImageChange, handleTagsChange } = this;
-    const { minimumContribution, errorMessage, loading, tags, imagePreviewUrl } = this.state;
+    const { onChange, handleSubmit, handleImageChange, handleTagsChange } = this;
+    const { title, body, project_image, minimumContribution, errorMessage, loading, tags, imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl}  className='img-preview thumbnail' alt={'hi'}/>);
+      $imagePreview = (<img src={imagePreviewUrl}  className='img-preview thumbnail' alt={title}/>);
+    } else {
+      // eslint-disable-next-line jsx-a11y/img-redundant-alt
+      $imagePreview = (<img className="thumbnail img-preview empty-image" alt='Enter an image' src="https://cdn3.iconfinder.com/data/icons/line-icons-large-version/64/photo-512.png" title="Preview Logo" />);
     }
 
     return (
       <ProjectNew
+        title={title}
+        body={body}
+        project_image={project_image}
         minimumContribution={minimumContribution}
         errorMessage={errorMessage}
         loading={loading}
         onChange={onChange}
         handleImageChange={handleImageChange}
         handleTagsChange={handleTagsChange}
-        onSubmit={onSubmit}
+        handleSubmit={handleSubmit}
         imagePreview={$imagePreview}
         tags={tags}
        />

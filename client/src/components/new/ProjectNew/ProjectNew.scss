@@ -33,6 +33,14 @@
 .form-control, .thumbnail {
     border-radius: 2px;
 }
+
+.empty-image {
+  width: 100%;
+  height: 150px;
+  max-width: 150px;
+  vertical-align: middle;
+}
+
 .input-label {
   margin-top: 1rem;
 }

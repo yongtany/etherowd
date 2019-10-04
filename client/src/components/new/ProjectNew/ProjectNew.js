@@ -20,7 +20,7 @@ const ProjectNew = props => (
             <p className={cx('text-muted')}>프로젝트를 개설하세요.</p>
           </div>
           <div className={cx('new-content')}>
-            <form onSubmit={props.onSubmit} className={cx('form-wrapper')}>
+            <form onSubmit={props.handleSubmit} className={cx('form-wrapper')}>
               <div className="form-group">
                 <div className="container">
                   <div className="row">
@@ -52,6 +52,7 @@ const ProjectNew = props => (
                        />
                        <small id="Help" className="form-text text-muted">태그를 통해 투자자들에게 검색됩니다.</small>
                     </div>
+
                     <div className="col-sm-6">
                       <div className="form-group">
                         <label className="input-label">프로젝트 이미지를 등록하세요.</label>
@@ -63,7 +64,13 @@ const ProjectNew = props => (
                           <div className="input-group-btn">
                             <div className="fileUpload btn btn-danger fake-shadow">
                               <span><i className="glyphicon glyphicon-upload"></i> Upload Logo</span>
-                              <input id="logo-id" name="logo" type="file" onChange={props.handleImageChange} className="attachment_upload" />
+                              <input
+                                id="logo-id"
+                                name={props.project_image}
+                                type="file"
+                                onChange={props.handleImageChange}
+                                className="attachment_upload"
+                              />
                             </div>
                           </div>
                         </div>
@@ -73,7 +80,9 @@ const ProjectNew = props => (
                 </div>
               </div>
 
-              <Editor />
+              <Editor
+                body={props.body}
+              />
               {
                 props.loading ?
                   <LoadingButton
