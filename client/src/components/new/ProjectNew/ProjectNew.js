@@ -6,8 +6,7 @@ import LoadingButton from 'components/common/LoadingButton';
 import Editor from 'components/new/Editor';
 
 import TagsInput from 'react-tagsinput'
-import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
-
+import 'react-tagsinput/react-tagsinput.css'
 
 const cx = classNames.bind(styles);
 
@@ -79,17 +78,22 @@ const ProjectNew = props => (
                   </div>
                 </div>
               </div>
-
               <Editor
                 body={props.body}
+                handleIsSave={props.handleIsSave}
+                onChange={props.handleBodyChange}
+
               />
-              {
-                props.loading ?
-                  <LoadingButton
-                    type={"primary"}
-                  />
-                : <button className="btn btn-primary">개설하기</button>
-              }
+              <div className="mt-5 mb-5 submit">
+                {
+                  props.loading ?
+                    <LoadingButton
+                      type={"primary"}
+                    />
+                  : <button className="btn btn-primary">프로젝트 개설하기</button>
+                }
+              </div>
+
             </form>
           </div>
         </div>

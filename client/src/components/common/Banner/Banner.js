@@ -4,7 +4,6 @@ import WOW from 'wow.js';
 import styles from './Banner.scss';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 

@@ -7,12 +7,12 @@ import { connect } from 'react-redux';
 import { toast } from "react-toastify";
 import * as api from 'librarys/api';
 
-
 class ProjectNewContainer extends Component {
   state = {
     minimumContribution: '',
     errorMessage: '',
     loading: false,
+    isSave: false,
     project_image: '',
     imagePreviewUrl: '',
     title:'',
@@ -44,14 +44,25 @@ class ProjectNewContainer extends Component {
   }
 
   handleTagsChange = (tags) => {
-    this.setState({tags})
+    this.setState({tags});
+  }
+
+  handleBodyChange = (body) => {
+    this.setState({body});
+  }
+
+  handleIsSave = () => {
+    this.setState({
+      isSave: true
+    });
+    toast.success('상세설명을 저장하였습니다.');
   }
 
   handleSubmit = async event => {
     event.preventDefault();
-    const { history } = this.props;
+    const { history, token } = this.props;
     this.setState({ loading: true, errorMessage: '' });
-    const { title, body, project_image, tags, minimumContribution } = this.state;
+    const { title, body, project_image, tags, minimumContribution, isSave } = this.state;
 
     const formData = new FormData();
     formData.append('title', title);
@@ -61,25 +72,48 @@ class ProjectNewContainer extends Component {
       formData.append('tags', tags[i]);
     }
 
+    const object = {
+      'title' : formData.get('title'),
+      'body' : formData.get('body'),
+      'tags' : formData.getAll('tags'),
+      'project_image': formData.get('project_image')
+    };
+
     try {
-      if (typeof parseInt(minimumContribution) === 'number' && minimumContribution !== '') {
-        const accounts = await web3.eth.getAccounts();
+      if(title !== '') {
+        if (typeof parseInt(minimumContribution) === 'number' && minimumContribution !== '') {
+          if(tags.length !== 0) {
+            if(project_image !== '') {
+              if(isSave) {
+                const accounts = await web3.eth.getAccounts();
 
-        await api.createProject(formData);
-        await factory.methods
-          .createProject(minimumContribution)
-          .send({
-            from: accounts[0]
-          });
+                await api.createProject(formData, token);
+                await factory.methods
+                  .createProject(minimumContribution)
+                  .send({
+                    from: accounts[0]
+                  });
 
-
-
-        history.push('/projects');
-        toast.success("프로젝트가 생성되었습니다.");
+                history.push('/projects');
+                toast.success("프로젝트가 생성되었습니다.");
+              }
+              else {
+                toast.error('저장하기 버튼을 눌러주세요.');
+              }
+            } else {
+              toast.error('프로젝트 이미지를 등록해주세요.');
+            }
+          } else {
+            toast.error('태그를 입력하세요.');
+          }
+        }
+        else {
+          toast.error('금액을 정확히 입력해주세요.');
+        }
+      } else {
+        toast.error('제목을 입력하세요.');
       }
-      else {
-        toast.error('금액을 정확히 입력해주세요.');
-      }
+
 
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -89,7 +123,7 @@ class ProjectNewContainer extends Component {
 
 
   render() {
-    const { onChange, handleSubmit, handleImageChange, handleTagsChange } = this;
+    const { onChange, handleSubmit, handleImageChange, handleTagsChange, handleBodyChange, handleIsSave } = this;
     const { title, body, project_image, minimumContribution, errorMessage, loading, tags, imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
@@ -110,9 +144,11 @@ class ProjectNewContainer extends Component {
         onChange={onChange}
         handleImageChange={handleImageChange}
         handleTagsChange={handleTagsChange}
+        handleBodyChange={handleBodyChange}
         handleSubmit={handleSubmit}
         imagePreview={$imagePreview}
         tags={tags}
+        handleIsSave={handleIsSave}
        />
     );
   }
@@ -120,6 +156,7 @@ class ProjectNewContainer extends Component {
 
 export default connect(
   (state) => ({
+    token: state.auth.get('token'),
     title: state.new.get('title'),
     detail: state.new.get('detail'),
     pictures: state.new.get('pictures'),

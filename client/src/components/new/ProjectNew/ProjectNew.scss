@@ -31,7 +31,8 @@
 }
 
 .form-control, .thumbnail {
-    border-radius: 2px;
+    border-radius: 0.8rem;
+    border: 2px solid gray;
 }
 
 .empty-image {
@@ -72,5 +73,9 @@
   height: 250px;
   max-width: 450px;
   vertical-align: middle;
+}
+
+.submit {
+  margin-left: 5rem;
 }
 

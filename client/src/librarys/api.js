@@ -7,7 +7,7 @@ export const signUp = (formData) => axios.post('/users/signup/', formData, {head
 export const signIn = (jsonObject) => axios.post('/users/signin/', jsonObject, {headers: { 'Content-Type': 'application/json' }});
 
 // About Proeject
-export const createProject = (formData) => axios.post('/projects/', formData, {headers: {'Content-type': 'multipart/form-data'}});
+export const createProject = (formData, token) => axios.post('/projects/', formData, {headers: {'Authorization': `${token}`, 'content-type': 'multipart/form-data'}});
 
 export const getProjectList = async () => {
   const list = await factory.methods.getDeployedProjects().call();

@@ -1,6 +1,12 @@
 #editorjs {
   background: white;
   width: 50rem;
+  border-radius: 0.8rem;
+  border: 2px solid gray;
   text-align: start;
-  margin-bottom: 5rem;
+}
+
+.save {
+  margin: 0.5rem 0.5rem;
+  float: right;
 }
