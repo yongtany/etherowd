@@ -40,6 +40,7 @@ Following items are core frontend technologies used in this project:
 - Sass
 - Bootstrap
 - wow.js
+- editorjs
 
 ### Server
 
@@ -52,6 +53,7 @@ Following items are core backend technologies used in this project:
 - express
 - mongoDB
 - mongoose,
+- cloudinary(upload images)
 - heroku(deploy) not yet
 
 ## Getting started
