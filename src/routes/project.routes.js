@@ -7,7 +7,7 @@ const passportJWT = passport.authenticate('jwt', { session: false });
 
 router.route('/')
   .post(passportJWT,
-  Uploader.upload.single('projectImage'),
-  ProjectsControllers.createPost);
+  Uploader.upload.single('project_image'),
+  ProjectsControllers.createProject);
 
 module.exports = router;

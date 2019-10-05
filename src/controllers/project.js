@@ -3,14 +3,14 @@ const Post = require('models/project');
 const { cloudinary } = require('services/upload');
 
 module.exports = {
-  createPost : async (req, res) => {
+  createProject : async (req, res) => {
     try {
       cloudinary.uploader.upload(req.file.path, async function(result) {
-        req.body.projectImage = result.secure_url;
+        req.body.project_image = result.secure_url;
 
-        const post = await Post.createPost(req.body, req.user._id, req.body.postImage);
+        const project = await Post.createProject(req.body, req.user._id, req.body.project_image);
 
-        return res.status(HTTPStatus.CREATED).json(post);
+        return res.status(HTTPStatus.CREATED).json(project);
       });
 
     } catch(e) {

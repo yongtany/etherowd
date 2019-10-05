@@ -15,8 +15,8 @@ const projectSchema = new Schema({
     type: Date,
     default: new Date() // 현재 날짜를 기본값으로
   },
-  projectImage: {
-    type: [String],
+  project_image: {
+    type: String,
   },
   user: {
     type: Schema.Types.ObjectId,
@@ -38,7 +38,7 @@ projectSchema.methods = {
       title: this.title,
       body: this.body,
       tags: this.tags,
-      projectImage: this.projectImage,
+      project_image: this.project_image,
       publishedDate: this.publishedDate,
       user: this.user,
       favoriteCount: this.favoriteCount,
@@ -48,14 +48,14 @@ projectSchema.methods = {
 };
 
 projectSchema.statics = {
-  createPost(args, user, projectImage) {
+  createProject(args, user, project_image) {
     return this.create({
       ...args,
       user,
-      projectImage
+      project_image
     });
   },
 };
 
 
-module.exports = mongoose.model('Post', projectSchema);
+module.exports = mongoose.model('Project', projectSchema);

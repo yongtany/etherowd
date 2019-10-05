@@ -72,13 +72,6 @@ class ProjectNewContainer extends Component {
       formData.append('tags', tags[i]);
     }
 
-    const object = {
-      'title' : formData.get('title'),
-      'body' : formData.get('body'),
-      'tags' : formData.getAll('tags'),
-      'project_image': formData.get('project_image')
-    };
-
     try {
       if(title !== '') {
         if (typeof parseInt(minimumContribution) === 'number' && minimumContribution !== '') {
@@ -87,12 +80,14 @@ class ProjectNewContainer extends Component {
               if(isSave) {
                 const accounts = await web3.eth.getAccounts();
 
-                await api.createProject(formData, token);
+
                 await factory.methods
                   .createProject(minimumContribution)
                   .send({
                     from: accounts[0]
                   });
+
+                await api.createProject(formData, token);
 
                 history.push('/projects');
                 toast.success("프로젝트가 생성되었습니다.");
