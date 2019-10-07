@@ -2,10 +2,16 @@ pragma solidity ^0.4.17;
 
 contract ProjectFactory {
     address [] public deployedProjects;
+    uint public index;
 
     function createProject(uint minimum) public {
         address newProject = new Project(minimum, msg.sender);
         deployedProjects.push(newProject);
+        index++;
+    }
+
+    function getDeployedProject() public view returns (address) {
+        return deployedProjects[index-1];
     }
 
     function getDeployedProjects() public view returns (address []) {

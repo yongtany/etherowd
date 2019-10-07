@@ -15,8 +15,8 @@ export const getRecentsList = createAction(GET_RECENT_LIST, api.getRecentsListBl
 const initialState = Map({
   projects: List(),
   recents: List(),
+  lastPage: null,
 });
-
 
 // reducer
 export default handleActions({

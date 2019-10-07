@@ -63,7 +63,7 @@ class ProjectNewContainer extends Component {
     const { history, token } = this.props;
     this.setState({ loading: true, errorMessage: '' });
     const { title, body, project_image, tags, minimumContribution, isSave } = this.state;
-
+    console.log(factory);
     const formData = new FormData();
     formData.append('title', title);
     formData.append('body', body);

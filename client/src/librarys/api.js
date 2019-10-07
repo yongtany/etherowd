@@ -1,6 +1,7 @@
 import axios from 'axios';
 import factory from 'ethereum/factory';
 import Project from 'ethereum/project';
+import queryString from 'query-string';
 
 // About User
 export const signUp = (formData) => axios.post('/users/signup/', formData, {headers: {'Content-type': 'multipart/form-data'}});
@@ -9,6 +10,7 @@ export const signIn = (jsonObject) => axios.post('/users/signin/', jsonObject, {
 
 // About Project with Server
 export const createProject = (formData, token) => axios.post('/projects/', formData, {headers: {'Authorization': `${token}`, 'content-type': 'multipart/form-data'}});
+export const getPostList = ({ tag, page }) => axios.get(`/proojects/?${queryString.stringify({ tag, page })}`);
 
 
 // About Prooject with Block Chain
