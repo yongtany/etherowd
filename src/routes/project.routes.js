@@ -10,4 +10,7 @@ router.route('/')
   Uploader.upload.single('project_image'),
   ProjectsControllers.createProject);
 
+router.route('/')
+  .get(ProjectsControllers.getProjectList);
+
 module.exports = router;
