@@ -8,8 +8,8 @@ const GET_PROJECT_LIST = 'list/GET_PROJECT_LIST';
 const GET_RECENT_LIST = 'list/GET_RECENT_LIST';
 
 // action creators
-export const getProjectList = createAction(GET_PROJECT_LIST, api.getProjectList);
-export const getRecentsList = createAction(GET_RECENT_LIST, api.getRecentsList);
+export const getProjectList = createAction(GET_PROJECT_LIST, api.getProjectListBlockChain);
+export const getRecentsList = createAction(GET_RECENT_LIST, api.getRecentsListBlockChain);
 
 // initial state
 const initialState = Map({

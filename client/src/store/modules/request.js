@@ -8,7 +8,7 @@ const GET_REQUEST_LIST = 'list/GET_PROJECT_LIST';
 
 
 // action creators
-export const getRequestList = createAction(GET_REQUEST_LIST, api.getRequestList);
+export const getRequestList = createAction(GET_REQUEST_LIST, api.getRequestListBlockChain);
 
 
 // initial state

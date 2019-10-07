@@ -10,7 +10,7 @@ const GET_PROJECT = 'Project/GET_PROJECT';
 
 
 // action creators
-export const getProject = createAction(GET_PROJECT, api.getProject);
+export const getProject = createAction(GET_PROJECT, api.getProjectBlockChain);
 
 // initial state
 const initialState = Map({

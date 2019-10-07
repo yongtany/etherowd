@@ -6,22 +6,25 @@ import Project from 'ethereum/project';
 export const signUp = (formData) => axios.post('/users/signup/', formData, {headers: {'Content-type': 'multipart/form-data'}});
 export const signIn = (jsonObject) => axios.post('/users/signin/', jsonObject, {headers: { 'Content-Type': 'application/json' }});
 
-// About Proeject
+
+// About Project with Server
 export const createProject = (formData, token) => axios.post('/projects/', formData, {headers: {'Authorization': `${token}`, 'content-type': 'multipart/form-data'}});
 
-export const getProjectList = async () => {
+
+// About Prooject with Block Chain
+export const getProjectListBlockChain = async () => {
   const list = await factory.methods.getDeployedProjects().call();
   const projects = list.reverse();
   return { projects };
 };
 
-export const getRecentsList = async () => {
+export const getRecentsListBlockChain = async () => {
   const projects = await factory.methods.getDeployedProjects().call();
   const recents = projects.slice(-3).reverse();
   return { recents };
 };
 
-export const getProject = async address => {
+export const getProjectBlockChain = async address => {
   const project = Project(address);
 
   const summary = await project.methods.getSummary().call();
@@ -36,7 +39,8 @@ export const getProject = async address => {
    };
 }
 
-export const getRequestList = async address => {
+
+export const getRequestListBlockChain = async address => {
   const project = Project(address);
   const requestCount = await project.methods.getRequestCount().call();
   const approversCount = await project.methods.approversCount().call();
@@ -48,7 +52,6 @@ export const getRequestList = async address => {
         return project.methods.requests(index).call();
       })
   );
-
 
   return {
     address,
