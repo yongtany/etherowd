@@ -10,6 +10,10 @@ const projectSchema = new Schema({
     type: String,
     required: true
   },
+  address: {
+    type: String,
+    required: true
+  },
   tags: [String],
   publishedDate: {
     type: Date,
@@ -26,9 +30,6 @@ const projectSchema = new Schema({
     type: Number,
     default: 0,
   },
-  category: {
-    type: String,
-  }
 });
 
 projectSchema.methods = {
@@ -39,12 +40,20 @@ projectSchema.methods = {
       body: this.body,
       tags: this.tags,
       project_image: this.project_image,
+      address: this.address,
       publishedDate: this.publishedDate,
       user: this.user,
       favoriteCount: this.favoriteCount,
-      category: this.category
     };
   },
+  toSummaryJSON() {
+    return  {
+      project_image: this.project_image,
+      title: this.title,
+      address: this.address,
+      user: this.user,
+    }
+  }
 };
 
 projectSchema.statics = {

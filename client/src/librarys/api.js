@@ -10,7 +10,7 @@ export const signIn = (jsonObject) => axios.post('/users/signin/', jsonObject, {
 
 // About Project with Server
 export const createProject = (formData, token) => axios.post('/projects/', formData, {headers: {'Authorization': `${token}`, 'content-type': 'multipart/form-data'}});
-export const getPostList = ({ tag, page }) => axios.get(`/proojects/?${queryString.stringify({ tag, page })}`);
+export const getPostList = ({ tag, page }) => axios.get(`/projects/?${queryString.stringify({ tag, page })}`);
 
 
 // About Prooject with Block Chain

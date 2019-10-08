@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-const ProjectItem = ({ address }) => (
+const ProjectItem = ({ address, project_image, title }) => (
   <div className={cx('col-md-4 col-sm-6 services-container text-center')}>
-    <i className={cx("fas fa-search-dollar")}></i>
-    <p><strong>{address}</strong></p>
+    <img src={project_image} alt={title} />
+    <p><strong>{title}</strong></p>
     <Link to={`/project/${address}`}>
     <p className={cx('text-muted')}>지금 투자하세요.</p>
     </Link>

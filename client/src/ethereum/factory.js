@@ -3,7 +3,7 @@ import ProjectFactory from 'ethereum/build/ProjectFactory.json';
 
 const instance = new web3.eth.Contract(
   JSON.parse(ProjectFactory.interface),
-  '0x9d199F5242d8771b893ebE269C4bc1AB091E155f'
+  '0xD4654F74b7987226A3F18E48B974Cb512256dA70'
 );
 
 export default instance;

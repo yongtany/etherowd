@@ -8,7 +8,7 @@ const GET_PROJECT_LIST = 'list/GET_PROJECT_LIST';
 const GET_RECENT_LIST = 'list/GET_RECENT_LIST';
 
 // action creators
-export const getProjectList = createAction(GET_PROJECT_LIST, api.getProjectListBlockChain);
+export const getProjectList = createAction(GET_PROJECT_LIST, api.getPostList);
 export const getRecentsList = createAction(GET_RECENT_LIST, api.getRecentsListBlockChain);
 
 // initial state
@@ -23,15 +23,18 @@ export default handleActions({
   ...pender({
     type: GET_PROJECT_LIST,
     onSuccess: (state, action) => {
-      const { projects } = action.payload;
-
-      return state.set('projects', fromJS(projects));
+      const { data: projects } = action.payload;
+      const lastPage = action.payload.headers['last-page'];
+      console.log(projects);
+      return state.set('projects', fromJS(projects))
+                  .set('lastPage', parseInt(lastPage, 10))
     }
   }),
   ...pender({
     type: GET_RECENT_LIST,
     onSuccess: (state, action) => {
       const { recents } = action.payload;
+      console.log(recents)
 
       return state.set('recents', fromJS(recents));
     }

@@ -8,12 +8,16 @@ import { List } from 'immutable';
 
 const cx = classNames.bind(styles);
 
-const ProjectList = ({projects = List()}) => {
+const ProjectList = ({ projects }) => {
   const projectList = projects.map(
-    (address) => {
+    (project) => {
+      const { address, title, project_image, tags } = project.toJS();
       return (
         <ProjectItem
+          title={title}
+          project_image={project_image}
           address={address}
+          tags={tags}
           key={address}
         />
       )
