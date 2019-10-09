@@ -23,8 +23,11 @@
   }
 }
 
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 4px;
+.b-grid {
+  -webkit-column-count: 2;
+  -moz-column-count: 3;
+  column-count: 4;
+  -webkit-column-width: 33%;
+  -moz-column-width: 33%;
+  column-width: 33%;
 }

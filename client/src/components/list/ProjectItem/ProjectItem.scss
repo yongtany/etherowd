@@ -9,6 +9,13 @@
     margin-top: 8px;
     vertical-align: middle;
     width: 100%;
+    .profile-image {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      float: right;
+      position: relative; top: -3rem;
+    }
     .card-title {
       color: black;
       cursor: pointer;

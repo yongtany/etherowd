@@ -8,7 +8,8 @@ const cx = classNames.bind(styles);
 const ProjectList = ({ projects }) => {
   const projectList = projects.map(
     (project) => {
-      const { address, title, project_image, tags } = project.toJS();
+      const { address, title, project_image, tags, user } = project.toJS();
+      const { profile_image, username } = user;
       return (
         <ProjectItem
           title={title}
@@ -16,6 +17,8 @@ const ProjectList = ({ projects }) => {
           address={address}
           tags={tags}
           key={address}
+          profile_image={profile_image}
+          username={username}
         />
       )
     }

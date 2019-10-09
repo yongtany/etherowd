@@ -26,7 +26,7 @@ export default handleActions({
     onSuccess: (state, action) => {
       const { data: projects } = action.payload;
       const lastPage = action.payload.headers['last-page'];
-      console.log(projects);
+
       return state.set('projects', fromJS(projects))
                   .set('lastPage', parseInt(lastPage, 10))
     }
