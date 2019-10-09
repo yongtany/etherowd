@@ -1,19 +1,22 @@
 import React from 'react';
 import styles from './RecentList.scss';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
 
 import ProjectItem from 'components/list/ProjectItem';
-import { List } from 'immutable';
+
 
 const cx = classNames.bind(styles);
 
-const RecentList = ({recents= List()}) => {
+const RecentList = ({ recents }) => {
   const recentsList = recents.map(
-    (address) => {
+    (recent) => {
+      const { address, title, project_image, tags } = recent.toJS();
       return (
         <ProjectItem
+          title={title}
+          project_image={project_image}
           address={address}
+          tags={tags}
           key={address}
         />
       )
@@ -32,11 +35,6 @@ const RecentList = ({recents= List()}) => {
         {/* end of header */}
         <div className={cx('row')}>
            {recentsList}
-        </div>
-        <div>
-          <Link to="/project/new">
-            <button className={cx('btn btn-primary')}>프로젝트 만들기</button>
-          </Link>
         </div>
       </div>
     </section>

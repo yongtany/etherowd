@@ -9,9 +9,9 @@ const LandingPage = () => {
   return (
     <PageTemplate>
       <Banner />
-      <Services />
-      <Promise />
       <RecentListContainer />
+      <Promise />
+      <Services />
     </PageTemplate>
   );
 };
