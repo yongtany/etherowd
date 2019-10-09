@@ -30,7 +30,7 @@ const PrivateNav = props => (
         </ul>
 )
 
-const PublicNav = props => (
+const PublicNav = () => (
         <ul className={cx("navbar-nav ml-auto")}>
           <li className={cx('nav-item active')}>
             <Link className={cx('nav-link')} to="/">
@@ -47,7 +47,7 @@ const PublicNav = props => (
 )
 
 const Navbar = props => (
-  <nav className={cx("navbar navbar-expand-md navbar-default bg-dark fixed-top")}>
+  <nav className={cx("navbar navbar-expand-md navbar-default fixed-top")}>
     <div className={cx("container")}>
       <Link className={cx("navbar-brand")} to="/">
         Etherowd

@@ -1,0 +1,13 @@
+.tag {
+    margin: 0.4rem;
+    font-family: "Nunito Sans", sans-serif;
+    color: gray;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: gray;
+      color: white;
+    }
+}

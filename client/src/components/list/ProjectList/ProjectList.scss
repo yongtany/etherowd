@@ -22,3 +22,9 @@
     margin-bottom: 3rem;
   }
 }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
