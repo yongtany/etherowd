@@ -32,7 +32,7 @@ const ProjectDetail = props => (
                   <h5 className="my-0 font-weight-normal">개설자</h5>
                 </div>
                 <div className="card-body">
-                  <h6 className="card-title pricing-card-title">{props.manager}</h6>
+                  <h6 className="card-title pricing-card-title">{props.username}</h6>
                   <ul className="list-unstyled mt-3 mb-4">
                     <li>개설자가 이 프로젝트를 만들었으며 돈을 인출하려는 요청을 만들 수 있습니다.</li>
                   </ul>

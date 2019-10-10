@@ -44,7 +44,7 @@ module.exports = {
       const projectCount = await Project.count(query).exec();
       const limitBodyLength = project => ({
         ...project,
-        body: project.body.length < 200 ? project.body : `${project.body.slice(0, 200)}...`
+        body: null
       });
 
       // 마지막 페이지 알려 주기
@@ -52,6 +52,40 @@ module.exports = {
       res.set('Last-Page', Math.ceil(projectCount / 10));
       return res.status(HTTPStatus.OK).json(projects.map(limitBodyLength));
     } catch (e) {
+      return res.status(HTTPStatus.BAD_REQUEST).json(e);
+    }
+  },
+
+  getRecentList : async (req, res) => {
+    try {
+      const recents = await Project.find()
+        .sort({ _id: -1 })
+        .limit(4)
+        .populate('user')
+        .lean()
+        .exec();
+
+      const limitBodyLength = project => ({
+          ...project,
+          body: null
+        });
+
+        return res.status(HTTPStatus.OK).json(recents.map(limitBodyLength));
+    } catch(e) {
+      return res.status(HTTPStatus.BAD_REQUEST).json(e);
+    }
+  },
+
+  getProjectByAddress: async (req, res) => {
+    try{
+      const address  = req.params.id;
+      const project = await Project.findOne({"address": address}).populate('user');
+
+      if(!project) {
+        return res.status(HTTPStatus.NOT_FOUND).json();
+      }
+      return res.status(HTTPStatus.OK).json(project);
+    } catch(e) {
       return res.status(HTTPStatus.BAD_REQUEST).json(e);
     }
   },

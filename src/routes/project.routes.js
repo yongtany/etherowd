@@ -13,4 +13,10 @@ router.route('/')
 router.route('/')
   .get(ProjectsControllers.getProjectList);
 
+router.route('/recent')
+  .get(ProjectsControllers.getRecentList);
+
+router.route('/:id')
+  .get(ProjectsControllers.getProjectByAddress);
+
 module.exports = router;

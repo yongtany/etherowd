@@ -8,7 +8,6 @@ import * as api from 'librarys/api';
 // action types
 const GET_PROJECT = 'Project/GET_PROJECT';
 
-
 // action creators
 export const getProject = createAction(GET_PROJECT, api.getProjectBlockChain);
 
@@ -29,4 +28,5 @@ export default handleActions({
       return state.set('project', fromJS(summary));
     }
   })
+
 }, initialState);

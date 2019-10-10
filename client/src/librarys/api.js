@@ -12,7 +12,7 @@ export const signIn = (jsonObject) => axios.post('/users/signin/', jsonObject, {
 export const createProject = (formData, token) => axios.post('/projects/', formData, {headers: {'Authorization': `${token}`, 'content-type': 'multipart/form-data'}});
 export const getProjectList = ({ tag, page }) => axios.get(`/projects/?${queryString.stringify({ tag, page })}`);
 export const getRecentList = () => axios.get('/projects/recent');
-
+export const getProject = (address) => axios.get(`/projects/${address}`);
 
 // About Prooject with Block Chain
 export const getProjectListBlockChain = async () => {
@@ -29,11 +29,17 @@ export const getRecentsListBlockChain = async () => {
 
 export const getProjectBlockChain = async address => {
   const project = Project(address);
-
+  const { data } = await getProject(address);
   const summary = await project.methods.getSummary().call();
 
   return {
     address: address,
+    user: data.user,
+    title: data.title,
+    body: data.body,
+    tags: data.tags,
+    publishedDate: data.publishedDate,
+    favoriteCount: data.favoriteCount,
     minimumContribution: summary[0],
     balance: summary[1],
     requestsCount: summary[2],

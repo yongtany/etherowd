@@ -23,38 +23,51 @@ class ProjectDetailContainer extends Component {
     this.initialize();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if(prevProps.project !== this.props.project) {
-      this.initialize();
-    }
+  componentDidUpdate() {
+    window.scrollTo(0,0);
   }
 
   render() {
     const { loading, project, match } = this.props;
     const { id } = match.params;
 
+    if(loading) return <Loading />;
+
+    const username = project.getIn(['user', 'username']);
+    const profile_image = project.getIn(['user', 'profile_image']);
+    const publicAddress = project.getIn(['user', 'publicAddress']);
+
     const {
       address,
+      title,
+      body,
+      tags,
+      favoriteCount,
+      publishedDate,
       minimumContribution,
       balance,
       requestsCount,
       approversCount,
-      manager
     } = project.toJS();
 
     const WeiToEther = web3.utils.fromWei(new web3.utils.BN(balance), 'ether');
-
-    if(loading) return <Loading />;
 
     return (
       <ProjectDetail
         projectId={id}
         address={address}
+        title={title}
+        body={body}
+        tags={tags}
+        username={username}
+        profile_image={profile_image}
+        publicAddress={publicAddress}
+        favoriteCount={favoriteCount}
+        publishedDate={publishedDate}
         minimumContribution={minimumContribution}
         balance={WeiToEther}
         requestsCount={requestsCount}
         approversCount={approversCount}
-        manager={manager}
       />
     );
   }
