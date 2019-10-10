@@ -33,7 +33,9 @@ const RecentList = ({ recents }) => {
           <p className={cx('text-muted')}>신규 프로젝트</p>
         </div>
         {/* end of header */}
-           {recentsList}
+        <div className={cx('row')}>
+          {recentsList}
+        </div>
       </div>
     </section>
   )

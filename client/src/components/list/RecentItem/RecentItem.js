@@ -11,22 +11,21 @@ const RecentItem = ({ address, project_image, title, tags }) => {
   const tagList = tags.map(
     tag => <Tag key={tag} to={`/tag/${tag}`} tag={tag} />
   );
+
   return (
-    <div className={cx('row')}>
       <div className={cx('column')}>
-      <Link className={cx('link')} to={`/project/${address}`}>
-        <div class="card recent-item">
-            <img class="card-img-top" src={project_image} alt={title} />
-            <div class="card-body">
-              <h5 class="card-title">{title}</h5>
-              <div class="card-text">
-                <p>{tagList}</p>
+        <Link className={cx('link')} to={`/project/${address}`}>
+          <div class="card recent-item">
+              <img class="card-img-top" src={project_image} alt={title} />
+              <div class="card-body">
+                <h5 class="card-title">{title}</h5>
+                <div class="card-text">
+                  <p>{tagList}</p>
+              </div>
             </div>
           </div>
-        </div>
-      </Link>
-    </div>
-    </div>
+        </Link>
+      </div>
   )
 };
 
