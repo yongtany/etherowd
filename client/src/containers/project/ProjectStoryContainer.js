@@ -5,11 +5,11 @@ import { bindActionCreators } from 'redux';
 import web3 from 'ethereum/web3';
 
 import * as projectActions from 'store/modules/project';
-import ProjectDetail from 'components/project/ProjectDetail';
+import ProjectHeader from 'components/project/ProjectHeader';
 import Loading from 'components/common/Loader';
 
 
-class ProjectDetailContainer extends Component {
+class ProjectStoryContainer extends Component {
   initialize = async () => {
     const { ProjectActions, id } = this.props;
     try {
@@ -40,6 +40,7 @@ class ProjectDetailContainer extends Component {
     const {
       address,
       title,
+      project_image,
       body,
       tags,
       favoriteCount,
@@ -53,21 +54,12 @@ class ProjectDetailContainer extends Component {
     const WeiToEther = web3.utils.fromWei(new web3.utils.BN(balance), 'ether');
 
     return (
-      <ProjectDetail
+      <ProjectHeader
         projectId={id}
         address={address}
         title={title}
-        body={body}
+        project_image={project_image}
         tags={tags}
-        username={username}
-        profile_image={profile_image}
-        publicAddress={publicAddress}
-        favoriteCount={favoriteCount}
-        publishedDate={publishedDate}
-        minimumContribution={minimumContribution}
-        balance={WeiToEther}
-        requestsCount={requestsCount}
-        approversCount={approversCount}
       />
     );
   }
@@ -76,9 +68,9 @@ class ProjectDetailContainer extends Component {
 export default connect(
   (state) => ({
     project: state.project.get('project'),
-    loading: state.pender.pending['project/GET_POST'], // 로딩 상태
+    loading: state.pender.pending['project/GET_PROJECT'], // 로딩 상태
   }),
   (dispatch) => ({
     ProjectActions: bindActionCreators(projectActions, dispatch),
   })
-)(withRouter(ProjectDetailContainer));
+)(withRouter(ProjectStoryContainer));

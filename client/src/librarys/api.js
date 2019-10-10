@@ -36,6 +36,7 @@ export const getProjectBlockChain = async address => {
     address: address,
     user: data.user,
     title: data.title,
+    project_image: data.project_image,
     body: data.body,
     tags: data.tags,
     publishedDate: data.publishedDate,
