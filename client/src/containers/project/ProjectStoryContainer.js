@@ -6,6 +6,9 @@ import web3 from 'ethereum/web3';
 
 import * as projectActions from 'store/modules/project';
 import ProjectHeader from 'components/project/ProjectHeader';
+import ProjectBody from 'components/project/ProjectBody';
+import ProjectContent from 'components/project/ProjectContent';
+import ProjectWrapper from 'components/project/ProjectWrapper';
 import Loading from 'components/common/Loader';
 
 
@@ -19,8 +22,13 @@ class ProjectStoryContainer extends Component {
     }
   }
 
-  componentDidMount() {
-    this.initialize();
+  async componentDidMount() {
+    await this.initialize();
+    const { project } = this.props;
+    const { body } = project.toJS();
+    console.log(body);
+
+    document.getElementById('projectBody').innerHTML= body;
   }
 
   componentDidUpdate() {
@@ -54,13 +62,23 @@ class ProjectStoryContainer extends Component {
     const WeiToEther = web3.utils.fromWei(new web3.utils.BN(balance), 'ether');
 
     return (
-      <ProjectHeader
+      <div>
+        <ProjectHeader
         projectId={id}
         address={address}
         title={title}
         project_image={project_image}
         tags={tags}
-      />
+        />
+        <ProjectWrapper>
+          <ProjectBody
+          project_image={project_image}
+          title={title}
+          body={body}
+          />
+          <ProjectContent />
+        </ProjectWrapper>
+      </div>
     );
   }
 }
