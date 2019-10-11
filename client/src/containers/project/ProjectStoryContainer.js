@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import web3 from 'ethereum/web3';
+import moment from 'moment';
 
 import * as projectActions from 'store/modules/project';
 import ProjectHeader from 'components/project/ProjectHeader';
@@ -26,7 +27,6 @@ class ProjectStoryContainer extends Component {
     await this.initialize();
     const { project } = this.props;
     const { body } = project.toJS();
-    console.log(body);
 
     document.getElementById('projectBody').innerHTML= body;
   }
@@ -51,8 +51,8 @@ class ProjectStoryContainer extends Component {
       project_image,
       body,
       tags,
-      favoriteCount,
       publishedDate,
+      favoriteCount,
       minimumContribution,
       balance,
       requestsCount,
@@ -60,6 +60,12 @@ class ProjectStoryContainer extends Component {
     } = project.toJS();
 
     const WeiToEther = web3.utils.fromWei(new web3.utils.BN(balance), 'ether');
+
+    // 펀딩 경과 일수
+    var now = moment(new Date());
+    var publishedDateFomatDate = moment(publishedDate);
+    var duration = moment.duration(now.diff(publishedDateFomatDate));
+    var days = Math.floor(duration.asDays());
 
     return (
       <div>
@@ -76,7 +82,14 @@ class ProjectStoryContainer extends Component {
           title={title}
           body={body}
           />
-          <ProjectContent />
+          <ProjectContent
+            days={days}
+            favoriteCount={favoriteCount}
+            minimumContribution={minimumContribution}
+            requestsCount={requestsCount}
+            balance={WeiToEther}
+            approversCount={approversCount}
+          />
         </ProjectWrapper>
       </div>
     );

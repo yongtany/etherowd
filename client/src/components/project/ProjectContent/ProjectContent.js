@@ -6,8 +6,10 @@ const cx = classnames.bind(styles);
 
 const ProjectContent = props => {
   return (
-    <div className={cx('project-content col-xs-3')}>
-      hi
+    <div className={cx('project-content col-md-3')}>
+      <div>
+        <p>{props.days}</p>
+      </div>
     </div>
   )
 }

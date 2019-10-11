@@ -1,11 +1,9 @@
 .project-body {
-  padding: 2.5rem;
+  padding: 2.5rem 2rem 0 2rem;
   width: 80%;
   img {
     width: 100%;
     max-height: 23rem;
-    padding-right: 2rem;
-    padding-left: 2rem;
   }
 
   #projectBody {
@@ -27,7 +25,5 @@
 @media screen and (max-width: 600px) {
   .project-body {
     padding: 0;
-    padding-right: 0;
-    padding-left: 0;
   }
 }
