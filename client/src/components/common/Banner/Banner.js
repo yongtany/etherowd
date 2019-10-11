@@ -25,7 +25,7 @@ class Banner extends Component  {
             {this.props.isLoggedIn ?
             <Link to="/project/new" className={cx('link')}>시작하기</Link>
             :
-            <div className={cx('link')} data-toggle="modal" data-target="#exampleModalCenter">시작하기</div>
+            <div className={cx('link')} data-toggle="modal" data-target="#authModal">시작하기</div>
             }
             <Link to="/projects" className={cx('link')}>자세히보기</Link>
           </div>

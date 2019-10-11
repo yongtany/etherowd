@@ -40,7 +40,7 @@ const ProjectNew = props => (
                         value={props.minimumContribution}
                         onChange={props.onChange}
                         name="minimumContribution"
-                        placeholder="Ether"
+                        placeholder="Wei"
                       />
                       <small id="Help" className="form-text text-muted">투자자들은 이 최소투자액부터 투자 가능합니다.</small>
 

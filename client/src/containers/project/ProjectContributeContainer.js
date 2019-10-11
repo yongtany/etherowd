@@ -30,10 +30,12 @@ class ProjectContributeContainer extends Component {
       const accounts = await web3.eth.getAccounts();
       const { history } = this.props;
 
-      await project.methods.contribute().send({
+
+      await project.methods.invest().send({
         from: accounts[0],
         value: web3.utils.toWei(this.state.value, 'ether')
       });
+      window.location.reload();
       toast.success('투자에 성공하였습니다.');
       history.push(`/project/${this.props.address}`);
 

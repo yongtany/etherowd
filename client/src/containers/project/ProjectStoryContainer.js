@@ -36,7 +36,7 @@ class ProjectStoryContainer extends Component {
   }
 
   render() {
-    const { loading, project, match } = this.props;
+    const { loading, project, isLoggedIn, match } = this.props;
     const { id } = match.params;
 
     if(loading) return <Loading />;
@@ -92,6 +92,7 @@ class ProjectStoryContainer extends Component {
             username={username}
             profile_image={profile_image}
             publicAddress={publicAddress}
+            isLoggedIn={isLoggedIn}
           />
         </ProjectWrapper>
       </div>
@@ -101,6 +102,7 @@ class ProjectStoryContainer extends Component {
 
 export default connect(
   (state) => ({
+    isLoggedIn: state.auth.get('isLoggedIn'),
     project: state.project.get('project'),
     loading: state.pender.pending['project/GET_PROJECT'], // 로딩 상태
   }),

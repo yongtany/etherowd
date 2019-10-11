@@ -41,7 +41,7 @@ const PublicNav = () => (
             <Link className={cx("nav-link")} to="/projects">투자하기</Link>
           </li>
           <li className={cx("nav-item")}>
-            <div className={cx("nav-link")} data-toggle="modal" data-target="#exampleModalCenter">시작하기</div>
+            <div className={cx("nav-link")} data-toggle="modal" data-target="#authModal">시작하기</div>
           </li>
         </ul>
 )
