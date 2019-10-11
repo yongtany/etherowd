@@ -89,6 +89,9 @@ class ProjectStoryContainer extends Component {
             requestsCount={requestsCount}
             balance={WeiToEther}
             approversCount={approversCount}
+            username={username}
+            profile_image={profile_image}
+            publicAddress={publicAddress}
           />
         </ProjectWrapper>
       </div>
