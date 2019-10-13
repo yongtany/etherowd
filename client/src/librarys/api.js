@@ -31,6 +31,10 @@ export const getProjectBlockChain = async address => {
   const project = Project(address);
   const { data } = await getProject(address);
   const summary = await project.methods.getSummary().call();
+  const investors = [];
+
+  for(var i = 0; i < summary[3]; i++)
+    investors.push(await project.methods.investors(i).call());
 
   return {
     address: address,
@@ -45,7 +49,8 @@ export const getProjectBlockChain = async address => {
     balance: summary[1],
     requestsCount: summary[2],
     approversCount: summary[3],
-    manager: summary[4]
+    manager: summary[4],
+    investors: investors
    };
 }
 
@@ -70,3 +75,18 @@ export const getRequestListBlockChain = async address => {
     approversCount
   };
 }
+
+export const getInvestorsByrank = async address => {
+  const project = Project(address);
+  const investors = [];
+  const approversCount = await project.methods.approversCount().call();
+  // console.log(approversCount);
+
+  for(var i = 0; i < approversCount; i++)
+    investors.push(await project.methods.investors(i).call());
+
+  return {
+    investors
+  }
+}
+

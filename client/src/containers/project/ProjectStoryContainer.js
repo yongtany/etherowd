@@ -12,12 +12,17 @@ import ProjectContent from 'components/project/ProjectContent';
 import ProjectWrapper from 'components/project/ProjectWrapper';
 import Loading from 'components/common/Loader';
 
-
 class ProjectStoryContainer extends Component {
+  state = {
+    isInvestor: false,
+  }
+
   initialize = async () => {
     const { ProjectActions, id } = this.props;
     try {
       await ProjectActions.getProject(id);
+      await ProjectActions.getRank(id);
+
     } catch (e) {
       console.log(e);
     }
@@ -25,10 +30,36 @@ class ProjectStoryContainer extends Component {
 
   async componentDidMount() {
     await this.initialize();
+    await this.isInvestor();
     const { project } = this.props;
     const { body } = project.toJS();
 
     document.getElementById('projectBody').innerHTML= body;
+  }
+
+  isInvestor = async () => {
+    const { project } = this.props;
+    const { investors } = project.toJS();
+    const managerAddress = project.getIn(['user', 'publicAddress']);
+    const coinbase = await web3.eth.getCoinbase();
+    const publicAddress = coinbase.toLowerCase();
+
+    try {
+      if(managerAddress === publicAddress) {
+        this.setState({
+          isInvestor: true
+        })
+      }
+      for(var i = 0; i < investors.length; i++) {
+        if(investors[i].investorAddress.toLowerCase() === publicAddress) {
+          this.setState({
+            isInvestor: true
+          })
+        }
+      }
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   componentDidUpdate() {
@@ -38,12 +69,13 @@ class ProjectStoryContainer extends Component {
   render() {
     const { loading, project, isLoggedIn, match } = this.props;
     const { id } = match.params;
+    const { isInvestor } = this.state;
 
     if(loading) return <Loading />;
 
-    const username = project.getIn(['user', 'username']);
+    const manager = project.getIn(['user', 'username']);
     const profile_image = project.getIn(['user', 'profile_image']);
-    const publicAddress = project.getIn(['user', 'publicAddress']);
+    const managerAddress = project.getIn(['user', 'publicAddress']);
 
     const {
       address,
@@ -60,6 +92,7 @@ class ProjectStoryContainer extends Component {
     } = project.toJS();
 
     const WeiToEther = web3.utils.fromWei(new web3.utils.BN(balance), 'ether');
+
 
     // 펀딩 경과 일수
     var now = moment(new Date());
@@ -83,16 +116,18 @@ class ProjectStoryContainer extends Component {
           body={body}
           />
           <ProjectContent
+            address={address}
             days={days}
             favoriteCount={favoriteCount}
             minimumContribution={minimumContribution}
             requestsCount={requestsCount}
             balance={WeiToEther}
             approversCount={approversCount}
-            username={username}
+            manager={manager}
             profile_image={profile_image}
-            publicAddress={publicAddress}
+            managerAddress={managerAddress}
             isLoggedIn={isLoggedIn}
+            isInvestor={isInvestor}
           />
         </ProjectWrapper>
       </div>
@@ -104,6 +139,7 @@ export default connect(
   (state) => ({
     isLoggedIn: state.auth.get('isLoggedIn'),
     project: state.project.get('project'),
+    // investors: state.project.get('investors'),
     loading: state.pender.pending['project/GET_PROJECT'], // 로딩 상태
   }),
   (dispatch) => ({

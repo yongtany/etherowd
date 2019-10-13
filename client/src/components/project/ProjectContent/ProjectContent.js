@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './ProjectContent.scss';
 import classnames from 'classnames/bind';
 import { HeartEmpty } from 'components/common/Icons'
@@ -39,17 +40,37 @@ const ProjectContent = props => {
           <img
             className={cx('col-md-5')}
             src={props.profile_image}
-            alt={props.username}
+            alt={props.manager}
           />
           <div className={cx('col-md-7 profile')}>
-            <h6>{props.username}</h6>
+            <h6>{props.manager}</h6>
             <p className={cx('publicAddress')}>창업자 계좌번호</p>
-            <p>{props.publicAddress}</p>
+            <p>{props.managerAddress}</p>
           </div>
         </div>
+
         <div className={cx('request')}>
-            <button>요청 리스트</button>
-          </div>
+          {props.isLoggedIn ?
+            props.isInvestor ?
+            <Link to={`/project/${props.address}/requests`}>
+              <button
+              className={'funding-button'}
+            >요청 리스트</button>
+            </Link>
+            :
+            <button
+              className={'funding-button'}
+              data-toggle="modal"
+              data-target="#fundingTarget"
+            >요청 리스트</button>
+            :
+            <button
+              className={'funding-button'}
+              data-toggle="modal"
+              data-target="#authModal"
+            >요청 리스트</button>
+            }
+        </div>
       </div>
     </div>
   )
