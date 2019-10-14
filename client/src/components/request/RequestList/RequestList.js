@@ -2,20 +2,16 @@ import React from 'react';
 import styles from './RequestList.scss';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-
 import RequestRow from 'components/request/RequestRow';
-import Loading from 'components/common/Loader';
 
 const cx = classNames.bind(styles);
 
 const RequestList = ({ requests, address, approversCount, onApprove, onFinalize, me }) => {
   const requestList = requests === undefined ? (
         <tr>
-          <th>
-            <td>
-              아직 개설자의 요청사항이 없습니다.
-            </td>
-          </th>
+          <td>
+            아직 개설자의 요청사항이 없습니다.
+          </td>
         </tr>
     ) :
     requests.map(
@@ -61,7 +57,6 @@ const RequestList = ({ requests, address, approversCount, onApprove, onFinalize,
                 요청 추가
               </button>
             </Link> : <></>}
-
           </div>
 
           <div className="container">

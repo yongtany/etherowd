@@ -6,7 +6,7 @@ import web3 from 'ethereum/web3'
 import Project from 'ethereum/project';
 import * as requestActions from 'store/modules/request';
 import RequestList from 'components/request/RequestList';
-
+import Loading from 'components/common/Loader';
 
 class RequestListContinaer extends Component {
   state = {
@@ -45,8 +45,10 @@ class RequestListContinaer extends Component {
   }
 
   render() {
-    const { requests, approversCount, id } = this.props;
+    const { requests, approversCount, id, loading } = this.props;
     const { me } = this.state;
+    if(loading)  return <Loading />;
+
     return (
       <RequestList
         requests={requests}
@@ -63,7 +65,7 @@ export default connect(
     manager: state.project.get('manager'),
     requests: state.request.get('requests'),
     approversCount: state.request.get('approversCount'),
-    loading: state.pender.pending['list/GET_REQUEST_LIST'],
+    loading: state.pender.pending['request/GET_REQUEST_LIST'],
   }),
   (dispatch) => ({
     RequestActions: bindActionCreators(requestActions, dispatch)

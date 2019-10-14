@@ -4,7 +4,7 @@ import { pender } from 'redux-pender';
 import * as api from 'librarys/api';
 
 // action types
-const GET_REQUEST_LIST = 'list/GET_PROJECT_LIST';
+const GET_REQUEST_LIST = 'request/GET_REQUEST_LIST';
 
 
 // action creators
