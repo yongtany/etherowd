@@ -9,12 +9,16 @@ import Loading from 'components/common/Loader';
 const cx = classNames.bind(styles);
 
 const RequestList = ({ requests, address, approversCount, onApprove, onFinalize, me }) => {
-
-  if(requests === undefined) {
-    return <Loading />
-  }
-
-  const requestList = requests.map(
+  const requestList = requests === undefined ? (
+        <tr>
+          <th>
+            <td>
+              아직 개설자의 요청사항이 없습니다.
+            </td>
+          </th>
+        </tr>
+    ) :
+    requests.map(
     (request, index) => {
       return (
         <RequestRow
@@ -34,6 +38,8 @@ const RequestList = ({ requests, address, approversCount, onApprove, onFinalize,
       )
     }
   );
+
+
 
   return (
     <section id="services">
@@ -73,7 +79,6 @@ const RequestList = ({ requests, address, approversCount, onApprove, onFinalize,
               </thead>
               <tbody>
                 {requestList}
-
               </tbody>
             </table>
           </div>
