@@ -39,9 +39,9 @@ class RequestListContinaer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if(prevProps.requests !== this.props.requests) {
-    //   this.getRequestList();
-    // }
+    if(prevProps.requests !== this.props.requests) {
+      this.getRequestList();
+    }
   }
 
   render() {

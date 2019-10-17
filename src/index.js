@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 // Routes
 app.use('/users', require('routes/user.routes'));
 app.use('/projects', require('routes/project.routes'));
+app.use('/requests', require('routes/request.routes'));
 
 // Server start
 app.listen(process.env.PORT || 5000, err => {

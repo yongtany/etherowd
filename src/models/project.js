@@ -46,14 +46,6 @@ projectSchema.methods = {
       favoriteCount: this.favoriteCount,
     };
   },
-  toSummaryJSON() {
-    return  {
-      project_image: this.project_image,
-      title: this.title,
-      address: this.address,
-      user: this.user,
-    }
-  }
 };
 
 projectSchema.statics = {
