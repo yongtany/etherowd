@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const requestSchema = new Schema({
+  projectAddress: {
+    type: String,
+    required: true
+  },
   description: {
     type: String,
     required: true
@@ -27,9 +31,11 @@ requestSchema.methods = {
 };
 
 requestSchema.statics = {
-  createRequest(args, reqeust_image) {
+  createRequest(args, projectAddress, user, reqeust_image) {
     return this.create({
       ...args,
+      projectAddress,
+      user,
       reqeust_image
     });
   },

@@ -1,5 +1,6 @@
 const HTTPStatus = require('http-status');
 const Project = require('models/project');
+const Request = require('models/request');
 const { cloudinary } = require('services/upload');
 
 module.exports = {
@@ -89,4 +90,43 @@ module.exports = {
       return res.status(HTTPStatus.BAD_REQUEST).json(e);
     }
   },
+
+  requestOnProject: async (req, res) => {
+    try {
+      cloudinary.uploader.upload(req.file.path, async function(result) {
+        req.body.request_image = result.secure_url;
+
+        const projectAddress = req.params.id;
+
+        const request = await Request.createRequest(req.body, projectAddress, req.user._id, req.body.request_image);
+
+        const project = await Project.findOneAndUpdate({"address": projectAddress}, { $push: { requests: request }})
+
+        if(!project) {
+          return res.status(HTTPStatus.NOT_FOUND).json();
+        }
+
+        return res.status(HTTPStatus.OK).json(project);
+      });
+    } catch(e) {
+      return res.status(HTTPStatus.BAD_REQUEST).json(e);
+    }
+  },
+
+  getProjectRequests: async (req, res) => {
+    try {
+      const address  = req.params.id;
+
+      const requests = await Request.find({projectAddress: address})
+        .sort({ _id: -1 })
+        .limit(10)
+        .populate('user')
+        .lean()
+        .exec();
+
+      return res.status(HTTPStatus.OK).json(requests);
+    } catch(e) {
+
+    }
+  }
 }

@@ -13,6 +13,7 @@ export const createProject = (formData, token) => axios.post('/projects/', formD
 export const getProjectList = ({ tag, page }) => axios.get(`/projects/?${queryString.stringify({ tag, page })}`);
 export const getRecentList = () => axios.get('/projects/recent');
 export const getProject = (address) => axios.get(`/projects/${address}`);
+export const getRequestList = (address) => axios.get(`/requests/${address}`);
 
 // About Prooject with Block Chain
 export const getProjectListBlockChain = async () => {
@@ -80,7 +81,6 @@ export const getInvestorsByrank = async address => {
   const project = Project(address);
   const investors = [];
   const approversCount = await project.methods.approversCount().call();
-  // console.log(approversCount);
 
   for(var i = 0; i < approversCount; i++)
     investors.push(await project.methods.investors(i).call());

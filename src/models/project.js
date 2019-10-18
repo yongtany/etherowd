@@ -1,6 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const requestSchema = new Schema({
+  projectAddress: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  reqeust_image: {
+    type: String,
+  },
+  publishedDate: {
+    type: Date,
+    default: new Date() // 현재 날짜를 기본값으로
+  },
+});
+
 const projectSchema = new Schema({
   title: {
     type: String,
@@ -30,6 +48,7 @@ const projectSchema = new Schema({
     type: Number,
     default: 0,
   },
+  requests: [requestSchema]
 });
 
 projectSchema.methods = {

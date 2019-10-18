@@ -19,4 +19,15 @@ router.route('/recent')
 router.route('/:id')
   .get(ProjectsControllers.getProjectByAddress);
 
+router.route('/:id/request')
+  .post(
+    passportJWT,
+    Uploader.upload.single('request_image'),
+    ProjectsControllers.requestOnProject);
+
+router.route('/:id/requests')
+  .get(
+    passportJWT,
+    ProjectsControllers.getProjectRequests);
+
 module.exports = router;
