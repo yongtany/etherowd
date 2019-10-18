@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('config/keys');
 const HTTPStatus = require('http-status');
-const User = require('models/user');
+const User = require('models/user.model');
 const { cloudinary } = require('services/upload');
 
 signToken = user => {

@@ -1,6 +1,6 @@
 const router = require('express-promise-router')();
 const passport = require('passport');
-const UsersController = require('controllers/user');
+const UsersController = require('controllers/user.controller');
 const Uploader = require('services/upload');
 const jwt = require('express-jwt');
 const { JWT_SECRET } = require('config/keys');

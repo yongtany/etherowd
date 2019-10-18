@@ -4,7 +4,7 @@ const { ExtractJwt } = require('passport-jwt');
 const LocalStrategy  = require('passport-local').Strategy;
 
 const keys = require('config/keys');
-const User = require('models/user');
+const User = require('models/user.model');
 
 // JSON WEB TOKENS STRATEGY
 passport.use(new JwtStrategy({

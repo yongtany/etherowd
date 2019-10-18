@@ -38,17 +38,6 @@ userSchema.statics = {
   },
 };
 
-// userSchema.pre('save', async function(next) {
-//   try {
-//     const nonce = Math.floor(Math.random() * 10000);
-
-//     this.nonce = nonce;
-//     next();
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
 // Create a model
 const User = mongoose.model('User', userSchema);
 

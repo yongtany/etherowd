@@ -1,6 +1,6 @@
 const HTTPStatus = require('http-status');
-const Project = require('models/project');
-const Request = require('models/request');
+const Project = require('models/project.model');
+const Request = require('models/request.model');
 const { cloudinary } = require('services/upload');
 
 module.exports = {
