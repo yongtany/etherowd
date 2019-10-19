@@ -154,9 +154,5 @@ class ProjectNewContainer extends Component {
 export default connect(
   (state) => ({
     token: state.auth.get('token'),
-    title: state.new.get('title'),
-    detail: state.new.get('detail'),
-    pictures: state.new.get('pictures'),
-    tags: state.new.get('tags')
   })
 )(withRouter(ProjectNewContainer));

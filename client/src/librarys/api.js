@@ -4,16 +4,17 @@ import Project from 'ethereum/project';
 import queryString from 'query-string';
 
 // About User
-export const signUp = (formData) => axios.post('/users/signup/', formData, {headers: {'Content-type': 'multipart/form-data'}});
-export const signIn = (jsonObject) => axios.post('/users/signin/', jsonObject, {headers: { 'Content-Type': 'application/json' }});
+export const signUp = (formData) => axios.post('/users/signup/', formData, { headers: {'Content-type': 'multipart/form-data'}});
+export const signIn = (jsonObject) => axios.post('/users/signin/', jsonObject, { headers: { 'Content-Type': 'application/json' }});
 
 
 // About Project with Server
-export const createProject = (formData, token) => axios.post('/projects/', formData, {headers: {'Authorization': `${token}`, 'content-type': 'multipart/form-data'}});
+export const createProject = (formData, token) => axios.post('/projects/', formData, { headers: {'Authorization': `${token}`, 'Content-type': 'multipart/form-data'}});
 export const getProjectList = ({ tag, page }) => axios.get(`/projects/?${queryString.stringify({ tag, page })}`);
 export const getRecentList = () => axios.get('/projects/recent');
 export const getProject = (address) => axios.get(`/projects/${address}`);
-export const getRequestList = (address) => axios.get(`/requests/${address}`);
+export const getRequestList = (address, token) => axios.get(`/projects/${address}`, { headers: {'Authorization': `${token}` }});
+export const requestOnProject = (address, formData, token) => axios.post(`/projects/${address}/request`, formData, { headers: {'Authorization': `${token}`, 'Content-type': 'multipart/form-data'}});
 
 // About Prooject with Block Chain
 export const getProjectListBlockChain = async () => {
@@ -60,7 +61,7 @@ export const getRequestListBlockChain = async address => {
   const project = Project(address);
   const requestCount = await project.methods.getRequestCount().call();
   const approversCount = await project.methods.approversCount().call();
-
+  const token = localStorage.getItem('token');
   const requests = await Promise.all(
     Array(parseInt(requestCount))
       .fill()
@@ -68,6 +69,10 @@ export const getRequestListBlockChain = async address => {
         return project.methods.requests(index).call();
       })
   );
+
+  console.log(await getRequestList(address, token));
+
+  console.log(requests);
 
   return {
     address,

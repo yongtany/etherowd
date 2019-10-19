@@ -38,12 +38,6 @@ class RequestListContinaer extends Component {
     window.scrollTo(0,0);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if(prevProps.requests !== this.props.requests) {
-      this.getRequestList();
-    }
-  }
-
   render() {
     const { requests, approversCount, id, loading } = this.props;
     const { me } = this.state;
