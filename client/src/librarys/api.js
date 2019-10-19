@@ -2,6 +2,7 @@ import axios from 'axios';
 import factory from 'ethereum/factory';
 import Project from 'ethereum/project';
 import queryString from 'query-string';
+import * as services from 'librarys/services';
 
 // About User
 export const signUp = (formData) => axios.post('/users/signup/', formData, { headers: {'Content-type': 'multipart/form-data'}});
@@ -13,8 +14,9 @@ export const createProject = (formData, token) => axios.post('/projects/', formD
 export const getProjectList = ({ tag, page }) => axios.get(`/projects/?${queryString.stringify({ tag, page })}`);
 export const getRecentList = () => axios.get('/projects/recent');
 export const getProject = (address) => axios.get(`/projects/${address}`);
-export const getRequestList = (address, token) => axios.get(`/projects/${address}`, { headers: {'Authorization': `${token}` }});
+export const getRequestList = (address, token) => axios.get(`/projects/${address}/requests`, { headers: {'Authorization': `${token}` }});
 export const requestOnProject = (address, formData, token) => axios.post(`/projects/${address}/request`, formData, { headers: {'Authorization': `${token}`, 'Content-type': 'multipart/form-data'}});
+
 
 // About Prooject with Block Chain
 export const getProjectListBlockChain = async () => {
@@ -57,11 +59,13 @@ export const getProjectBlockChain = async address => {
 }
 
 
+
 export const getRequestListBlockChain = async address => {
   const project = Project(address);
   const requestCount = await project.methods.getRequestCount().call();
   const approversCount = await project.methods.approversCount().call();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('jwt');
+
   const requests = await Promise.all(
     Array(parseInt(requestCount))
       .fill()
@@ -70,9 +74,10 @@ export const getRequestListBlockChain = async address => {
       })
   );
 
-  console.log(await getRequestList(address, token));
-
-  console.log(requests);
+  const requestsOnServer = await getRequestList(address, token);
+  // console.log(requests);
+  // console.log(requestsOnServer.data);
+  services.deepMerge(requests, requestsOnServer.data);
 
   return {
     address,

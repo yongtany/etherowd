@@ -68,12 +68,13 @@ class RequestRow extends Component {
 
   render() {
     const { onApprove, onFinalize } = this;
-    const { index, description, recipient, value, approvalCount, approversCount, complete } = this.props;
+    const { index, description, reqeust_image, recipient, value, approvalCount, approversCount, complete } = this.props;
     return (
       <tr className={cx(`${complete && 'complete'}`)}>
         <th scope="row">{index+1}</th>
+        <td>{reqeust_image}</td>
         <td>{description}</td>
-        <td>{web3.utils.fromWei(value, 'ether')}</td>
+        <td>{web3.utils.fromWei(new web3.utils.BN(value), 'ether')}</td>
         <td>{recipient}</td>
         <td>{approvalCount} / {approversCount}</td>
         <td>

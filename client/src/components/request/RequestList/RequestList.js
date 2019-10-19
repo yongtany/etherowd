@@ -16,13 +16,15 @@ const RequestList = ({ requests, address, approversCount, onApprove, onFinalize,
     ) :
     requests.map(
     (request, index) => {
+      const { description, value, recipient, reqeust_image } = request.toJS();
       return (
         <RequestRow
-          description={request.description}
-          value={request.value}
-          recipient={request.recipient}
+          description={description}
+          value={value}
+          recipient={recipient}
           approvalCount={request.approvalCount}
           approversCount={approversCount}
+          reqeust_image={reqeust_image}
           // onApprove={onApprove}
           // onFinalize={onFinalize}
           complete={request.complete}
