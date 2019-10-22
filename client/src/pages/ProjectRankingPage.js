@@ -1,18 +1,29 @@
 import React from 'react';
 import PageTemplate from 'components/common/PageTemplate';
-import ProjectStoryContainer from 'containers/project/ProjectStoryContainer';
-// import ProjectContributeContainer from '../containers/project/ProjectContributeContainer';
+import ProjectContributeContainer from 'containers/project/ProjectContributeContainer';
+import ProjectHeaderContainer from 'containers/project/ProjectHeaderContainer';
+import ProjectWrapper from 'components/project/ProjectWrapper';
+import ProjectContentContainer from 'containers/project/ProjectContentContainer';
+import ProjectRankingContainer from 'containers/project/ProjectRankingContainer';
 
 const ProjectRankingPage = ({ match }) => {
   const { id } = match.params;
   return (
     <PageTemplate>
-      <ProjectStoryContainer
+      <ProjectHeaderContainer
         id={id}
       />
-      {/* <ProjectContributeContainer
+      <ProjectWrapper>
+        <ProjectRankingContainer
+          id={id}
+        />
+        <ProjectContentContainer
+          id={id}
+        />
+      </ProjectWrapper>
+      <ProjectContributeContainer
         address={id}
-      /> */}
+      />
     </PageTemplate>
   );
 };

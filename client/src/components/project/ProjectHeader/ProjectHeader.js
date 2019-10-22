@@ -30,8 +30,8 @@ const ProjectHeader = props => {
             <div className={cx('header-underline')}></div>
             <div className={cx('link-wrapper')}>
               <NavLink className={cx('project-link')} activeClassName="active"  exact to={`/project/${props.address}`}>스토리</NavLink>
-              <NavLink className={cx('project-link')} activeClassName="active" to={`/project/${props.address}/ranking`}>투자자 랭킹</NavLink>
               <NavLink className={cx('project-link')} activeClassName="active"  exact to={`/project/${props.address}/requests`}>요청사항</NavLink>
+              <NavLink className={cx('project-link')} activeClassName="active" to={`/project/${props.address}/ranking`}>투자자 랭킹</NavLink>
             </div>
           </div>
   )
