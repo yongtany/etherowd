@@ -40,53 +40,23 @@ const RequestList = ({ requests, address, approversCount, onApprove, onFinalize,
 
 
   return (
-    <section id="services">
-      <div className={cx('project-list')}>
-        <div className={cx('container project-list')}>
-          <div className={cx('header text-center')}>
-            <h1><strong>Request</strong></h1>
-            <div className={cx('header-underline')}></div>
-            <p className={cx('text-muted')}>프로젝트를 진행하기 위해 발생한 요청사항입니다.</p>
+      <div className={cx('request-list col-md-8')}>
+          <div>
+                {requestList}
           </div>
           <div>
-            <Link to={`/project/${address}`}>
-              <button className="btn btn-back">
-                뒤로 가기
-              </button>
-            </Link>
             { me ? <Link to={`/project/${address}/requests/new`} className="right">
-              <button className="btn btn-danger">
-                요청 추가
-              </button>
-            </Link> : <></>}
-          </div>
-
-          <div className="container">
-            <table className="table mt-5">
-              <thead className="thead-dark">
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">요청 사항</th>
-                  <th scope="col">비용</th>
-                  <th scope="col">거래자</th>
-                  <th scope="col">승인 수</th>
-                  <th scope="col"><span className="pl-2">승인</span></th>
-                  <th scope="col"><span className="pl-2">종료</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                {requestList}
-              </tbody>
-            </table>
+                <button className="btn btn-danger">
+                  요청 추가
+                </button>
+              </Link> : <></>}
           </div>
           <div className={cx('container mt-5')}>
             <p className={cx('text-muted')}>* 승인은 투자자만 수행할 수 있습니다.</p>
             <p className={cx('text-muted')}>* 개설자의 요청이 합당하다면 승인해주세요.</p>
             <p className={cx('text-muted')}>* 승인이 과반수 이상이고 관리자가 종료하면 자동 인출/송금 됩니다.</p>
           </div>
-        </div>
       </div>
-    </section>
   )
 }
 

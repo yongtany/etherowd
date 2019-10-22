@@ -70,14 +70,14 @@ class RequestRow extends Component {
     const { onApprove, onFinalize } = this;
     const { index, description, reqeust_image, recipient, value, approvalCount, approversCount, complete } = this.props;
     return (
-      <tr className={cx(`${complete && 'complete'}`)}>
-        <th scope="row">{index+1}</th>
-        <td>{reqeust_image}</td>
-        <td>{description}</td>
-        <td>{web3.utils.fromWei(new web3.utils.BN(value), 'ether')}</td>
-        <td>{recipient}</td>
-        <td>{approvalCount} / {approversCount}</td>
-        <td>
+      <div className={cx(`${complete && 'complete'}`)}>
+        <p>{index+1}</p>
+        <p>{reqeust_image}</p>
+        <p>{description}</p>
+        <p>{web3.utils.fromWei(new web3.utils.BN(value), 'ether')}</p>
+        <p>{recipient}</p>
+        <p>{approvalCount} / {approversCount}</p>
+        <p>
         {
           this.state.loadingA ?
           <LoadingButton
@@ -85,8 +85,8 @@ class RequestRow extends Component {
           />
            : <button className={cx(`btn btn-success ${ complete && 'disabled'}`)} disabled={complete} onClick={onApprove}>승인</button>
         }
-        </td>
-        <td>
+        </p>
+        <p>
         {
           this.state.loadingF ?
           <LoadingButton
@@ -94,8 +94,8 @@ class RequestRow extends Component {
           />
           : <button className={cx(`btn btn-danger ${ complete && 'disabled'}`)} disabled={complete} onClick={onFinalize}>종료</button>
         }
-        </td>
-      </tr>
+        </p>
+      </div>
     )
   }
 }
