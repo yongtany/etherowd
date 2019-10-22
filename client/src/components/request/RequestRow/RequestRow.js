@@ -68,33 +68,37 @@ class RequestRow extends Component {
 
   render() {
     const { onApprove, onFinalize } = this;
-    const { index, description, reqeust_image, recipient, value, approvalCount, approversCount, complete } = this.props;
+    const { description, reqeust_image, recipient, value, approvalCount, approversCount, complete } = this.props;
+
     return (
       <div className={cx(`${complete && 'complete'}`)}>
-        <p>{index+1}</p>
-        <p>{reqeust_image}</p>
-        <p>{description}</p>
-        <p>{web3.utils.fromWei(new web3.utils.BN(value), 'ether')}</p>
-        <p>{recipient}</p>
-        <p>{approvalCount} / {approversCount}</p>
-        <p>
-        {
-          this.state.loadingA ?
-          <LoadingButton
-            type={"success"}
-          />
-           : <button className={cx(`btn btn-success ${ complete && 'disabled'}`)} disabled={complete} onClick={onApprove}>승인</button>
-        }
-        </p>
-        <p>
-        {
-          this.state.loadingF ?
-          <LoadingButton
-            type={"danger"}
-          />
-          : <button className={cx(`btn btn-danger ${ complete && 'disabled'}`)} disabled={complete} onClick={onFinalize}>종료</button>
-        }
-        </p>
+        <div className={cx('request-row')}>
+          <img src={reqeust_image} alt={description} />
+          <p className={cx('description')}>{description}</p>
+          <p><label>필요 금액</label> <span>{web3.utils.fromWei(new web3.utils.BN(value), 'ether')} ether</span></p>
+          <p><label>거래처 계좌번호</label> {recipient}</p>
+          <div className={cx('vote')}>
+            <p className={cx('stats')}> {approvalCount} / {approversCount}</p>
+            <p>
+            {
+              this.state.loadingA ?
+              <LoadingButton
+                type={"success"}
+              />
+              : <button className={cx(`btn btn-success ${ complete && 'disabled'}`)} disabled={complete} onClick={onApprove}>승인</button>
+            }
+            </p>
+            <p>
+            {
+              this.state.loadingF ?
+              <LoadingButton
+                type={"danger"}
+              />
+              : <button className={cx(`btn btn-danger ${ complete && 'disabled'}`)} disabled={complete} onClick={onFinalize}>종료</button>
+            }
+            </p>
+          </div>
+        </div>
       </div>
     )
   }

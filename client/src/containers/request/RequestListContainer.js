@@ -6,7 +6,6 @@ import web3 from 'ethereum/web3'
 import Project from 'ethereum/project';
 import * as requestActions from 'store/modules/request';
 import RequestList from 'components/request/RequestList';
-import Loading from 'components/common/Loader';
 
 class RequestListContinaer extends Component {
   state = {
@@ -41,10 +40,10 @@ class RequestListContinaer extends Component {
   render() {
     const { requests, approversCount, id, loading } = this.props;
     const { me } = this.state;
-    if(loading)  return <Loading />;
 
     return (
       <RequestList
+        loading={loading}
         requests={requests}
         approversCount={approversCount}
         address={id}

@@ -3,10 +3,11 @@ import styles from './RequestList.scss';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import RequestRow from 'components/request/RequestRow';
+import Loading from 'components/common/Loader';
 
 const cx = classNames.bind(styles);
 
-const RequestList = ({ requests, address, approversCount, onApprove, onFinalize, me }) => {
+const RequestList = ({ requests, address, approversCount, onApprove, onFinalize, me, loading }) => {
   const requestList = requests === undefined ? (
         <tr>
           <td>
@@ -16,13 +17,15 @@ const RequestList = ({ requests, address, approversCount, onApprove, onFinalize,
     ) :
     requests.map(
     (request, index) => {
-      const { description, value, recipient, reqeust_image } = request.toJS();
+      const { description, value, recipient, approvalCount, reqeust_image } = request.toJS();
+      if(loading) return <Loading />;
+
       return (
         <RequestRow
           description={description}
           value={value}
           recipient={recipient}
-          approvalCount={request.approvalCount}
+          approvalCount={approvalCount}
           approversCount={approversCount}
           reqeust_image={reqeust_image}
           // onApprove={onApprove}
@@ -42,7 +45,7 @@ const RequestList = ({ requests, address, approversCount, onApprove, onFinalize,
   return (
       <div className={cx('request-list col-md-8')}>
           <div>
-                {requestList}
+            {requestList}
           </div>
           <div>
             { me ? <Link to={`/project/${address}/requests/new`} className="right">
