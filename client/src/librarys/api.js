@@ -8,7 +8,6 @@ import * as services from 'librarys/services';
 export const signUp = (formData) => axios.post('/users/signup/', formData, { headers: {'Content-type': 'multipart/form-data'}});
 export const signIn = (jsonObject) => axios.post('/users/signin/', jsonObject, { headers: { 'Content-Type': 'application/json' }});
 
-
 // About Project with Server
 export const createProject = (formData, token) => axios.post('/projects/', formData, { headers: {'Authorization': `${token}`, 'Content-type': 'multipart/form-data'}});
 export const getProjectList = ({ tag, page }) => axios.get(`/projects/?${queryString.stringify({ tag, page })}`);
@@ -16,7 +15,7 @@ export const getRecentList = () => axios.get('/projects/recent');
 export const getProject = (address) => axios.get(`/projects/${address}`);
 export const getRequestList = (address, token) => axios.get(`/projects/${address}/requests`, { headers: {'Authorization': `${token}` }});
 export const requestOnProject = (address, formData, token) => axios.post(`/projects/${address}/request`, formData, { headers: {'Authorization': `${token}`, 'Content-type': 'multipart/form-data'}});
-
+export const investToProject = (address, jsonObject) => axios.post(`/projects/${address}/invest`, jsonObject, { headers: { 'Content-Type': 'application/json' }});
 
 // About Prooject with Block Chain
 export const getProjectListBlockChain = async () => {
@@ -35,10 +34,6 @@ export const getProjectBlockChain = async address => {
   const project = Project(address);
   const { data } = await getProject(address);
   const summary = await project.methods.getSummary().call();
-  const investors = [];
-
-  for(var i = 0; i < summary[3]; i++)
-    investors.push(await project.methods.investors(i).call());
 
   return {
     address: address,
@@ -54,7 +49,7 @@ export const getProjectBlockChain = async address => {
     requestsCount: summary[2],
     approversCount: summary[3],
     manager: summary[4],
-    investors: investors
+    investors: data.investors
    };
 }
 

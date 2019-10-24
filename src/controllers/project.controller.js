@@ -1,6 +1,7 @@
 const HTTPStatus = require('http-status');
 const Project = require('models/project.model');
 const Request = require('models/request.model');
+const User = require('models/user.model');
 const { cloudinary } = require('services/upload');
 
 module.exports = {
@@ -80,7 +81,7 @@ module.exports = {
   getProjectByAddress: async (req, res) => {
     try{
       const address  = req.params.id;
-      const project = await Project.findOne({"address": address}).populate('user');
+      const project = await Project.findOne({"address": address}).populate('user').populate('investors');
 
       if(!project) {
         return res.status(HTTPStatus.NOT_FOUND).json();
@@ -127,6 +128,28 @@ module.exports = {
       return res.status(HTTPStatus.OK).json(requests);
     } catch(e) {
 
+    }
+  },
+
+  investToProject: async (req, res) => {
+    try {
+      const projectAddress = req.params.id;
+      const { publicAddress } = req.body
+      const user = await User.findOne({ "publicAddress": publicAddress });
+      const project = await Project.findOneAndUpdate({"address": projectAddress}, { $push: { investors: user }})
+
+      // If not, handle it
+      if(!user) {
+        return done(null, false);
+      }
+
+      if(!project) {
+        return res.status(HTTPStatus.NOT_FOUND).json();
+      }
+
+      return res.status(HTTPStatus.OK).json(project);
+    } catch (e) {
+      console.log(e);
     }
   }
 }

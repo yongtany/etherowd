@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import * as projectActions from 'store/modules/project';
 import ProjectContent from 'components/project/ProjectContent';
-import Loading from 'components/common/Loader';
+
 
 class ProjectContentContainer extends Component {
   state = {
@@ -35,7 +35,6 @@ class ProjectContentContainer extends Component {
     const managerAddress = project.getIn(['user', 'publicAddress']);
     const coinbase = await web3.eth.getCoinbase();
     const publicAddress = coinbase.toLowerCase();
-
     try {
       if(managerAddress === publicAddress) {
         this.setState({
@@ -43,7 +42,7 @@ class ProjectContentContainer extends Component {
         })
       }
       for(var i = 0; i < investors.length; i++) {
-        if(investors[i].investorAddress.toLowerCase() === publicAddress) {
+        if(investors[i].publicAddress.toLowerCase() === publicAddress) {
           this.setState({
             isInvestor: true
           })
@@ -62,7 +61,6 @@ class ProjectContentContainer extends Component {
     const { loading, project, isLoggedIn } = this.props;
     const { isInvestor } = this.state;
 
-    if(loading) return <Loading />;
 
     const manager = project.getIn(['user', 'username']);
     const profile_image = project.getIn(['user', 'profile_image']);
@@ -76,10 +74,11 @@ class ProjectContentContainer extends Component {
       balance,
       requestsCount,
       approversCount,
+      investors,
     } = project.toJS();
 
-    const WeiToEther = web3.utils.fromWei(new web3.utils.BN(balance), 'ether');
 
+    const WeiToEther = web3.utils.fromWei(new web3.utils.BN(balance), 'ether');
 
     // 펀딩 경과 일수
     var now = moment(new Date());
@@ -89,6 +88,7 @@ class ProjectContentContainer extends Component {
 
     return (
           <ProjectContent
+            loading={loading}
             address={address}
             days={days}
             favoriteCount={favoriteCount}
@@ -101,6 +101,7 @@ class ProjectContentContainer extends Component {
             managerAddress={managerAddress}
             isLoggedIn={isLoggedIn}
             isInvestor={isInvestor}
+            investors={investors}
           />
     );
   }

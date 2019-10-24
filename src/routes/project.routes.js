@@ -19,6 +19,9 @@ router.route('/recent')
 router.route('/:id')
   .get(ProjectsControllers.getProjectByAddress);
 
+router.route('/:id/invest')
+  .post(ProjectsControllers.investToProject);
+
 router.route('/:id/request')
   .post(
     passportJWT,

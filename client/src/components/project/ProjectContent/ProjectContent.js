@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import styles from './ProjectContent.scss';
 import classnames from 'classnames/bind';
 import { HeartEmpty } from 'components/common/Icons'
+import Loading from 'components/common/Loader';
 
 const cx = classnames.bind(styles);
 
 const ProjectContent = props => {
+  if(props.loading) return  <Loading />;
   return (
     <div className={cx('project-content col-md-4')}>
       <div className={cx('upperBox')}>

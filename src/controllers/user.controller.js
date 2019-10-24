@@ -83,4 +83,14 @@ module.exports = {
         console.log('UsersController.secret() called!');
         res.json({ secret: "resource" });
     },
+
+    getUser: async(req, res, publicAddress) => {
+      try {
+        const user = await User.findOne({ "publicAddress": publicAddress });
+
+        res.status(HTTPStatus.CREATED).json(user);
+      } catch (e) {
+        console.log(e);
+      }
+    }
 }

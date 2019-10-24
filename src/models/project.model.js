@@ -48,7 +48,9 @@ const projectSchema = new Schema({
     type: Number,
     default: 0,
   },
-  requests: [requestSchema]
+  requests: [requestSchema],
+
+  investors: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 projectSchema.methods = {
@@ -63,6 +65,7 @@ projectSchema.methods = {
       publishedDate: this.publishedDate,
       user: this.user,
       favoriteCount: this.favoriteCount,
+      investors: this.investors
     };
   },
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Project from 'ethereum/project';
 import web3 from 'ethereum/web3';
+import * as api from 'librarys/api';
 import { withRouter } from 'react-router-dom';
 import { toast } from "react-toastify";
 
@@ -23,6 +24,13 @@ class ProjectContributeContainer extends Component {
     event.preventDefault();
     const { address } = this.props;
     const project = Project(address);
+    const coinbase = await web3.eth.getCoinbase();
+    const publicAddress = coinbase.toLowerCase();
+    const formData = new FormData();
+    formData.append('publicAddress', publicAddress);
+    const object = {
+      'publicAddress': formData.get('publicAddress')
+    };
 
     this.setState({ loading: true, errorMessage: '' });
 
@@ -30,11 +38,13 @@ class ProjectContributeContainer extends Component {
       const accounts = await web3.eth.getAccounts();
       const { history } = this.props;
 
-
       await project.methods.invest().send({
         from: accounts[0],
         value: web3.utils.toWei(this.state.value, 'ether')
       });
+
+      await api.investToProject(address, object);
+
       window.location.reload();
       toast.success('투자에 성공하였습니다.');
       history.push(`/project/${this.props.address}`);
