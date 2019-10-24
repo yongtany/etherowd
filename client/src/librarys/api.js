@@ -35,6 +35,13 @@ export const getProjectBlockChain = async address => {
   const { data } = await getProject(address);
   const summary = await project.methods.getSummary().call();
 
+  const investors = [];
+
+  for(var i = 0; i < summary[3]; i++)
+    investors.push(await project.methods.investors(i).call());
+
+  services.deepMerge(investors, data.investors);
+
   return {
     address: address,
     user: data.user,
@@ -49,7 +56,7 @@ export const getProjectBlockChain = async address => {
     requestsCount: summary[2],
     approversCount: summary[3],
     manager: summary[4],
-    investors: data.investors
+    investors: investors
    };
 }
 

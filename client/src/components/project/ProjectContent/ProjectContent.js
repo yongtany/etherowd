@@ -9,6 +9,19 @@ const cx = classnames.bind(styles);
 
 const ProjectContent = props => {
   if(props.loading) return  <Loading />;
+  const { investors = [] } = props;
+  const bestInvestorList = investors.map(
+      (investor) => {
+        const { profile_image, username } = investor;
+        console.log(username);
+        return (
+          <div className={cx('investor')}>
+            <img src={profile_image} alt={username} />
+            <p>{username}</p>
+          </div>
+        )
+      }
+    )
   return (
     <div className={cx('project-content col-md-4')}>
       <div className={cx('upperBox')}>
@@ -72,6 +85,14 @@ const ProjectContent = props => {
               data-target="#authModal"
             >요청 리스트</button>
             }
+        </div>
+
+        <p>베스트 투자자</p>
+        <div className={cx('info-content')}>
+          <div className={cx('best-investors')}>
+            {bestInvestorList}
+          </div>
+          <p className={cx('more')}><Link to ={`/project/${props.address}/investors`}>더보기</Link></p>
         </div>
       </div>
     </div>

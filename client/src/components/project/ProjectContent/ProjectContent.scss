@@ -75,11 +75,32 @@
           margin-bottom: 0;
         }
       }
+
+      .best-investors {
+        display: flex;
+        .investor {
+          margin: 0 1rem 0 1rem;
+          text-align: center;
+          img {
+            width: 3.5rem;
+            height: 3.5rem;
+          }
+        }
+      }
+      .more {
+        right: 1.7rem;
+        bottom: 0.5rem;
+        a {
+          text-decoration: none;
+          color: grey;
+        }
+      }
     }
     .request {
       border: 1px solid grey;
       border-top: 0;
       padding: 1.5rem;
+      margin-bottom: 1.5rem;
 
       button {
         background-color: lightgrey;
@@ -89,6 +110,7 @@
         height: 2.5rem;
         font-size: 1.2rem;
       }
+
       button:hover {
         background-color: grey;
         color: white;

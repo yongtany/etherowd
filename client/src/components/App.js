@@ -33,7 +33,7 @@ const PrivateRoutes = () => (
     <Route exact path="/projects" component={ListPage}/>
     <Route exact path="/project/new" component={NewProjectPage}/>
     <Route exact path="/project/:id" component={ProjectStoryPage}/>
-    <Route exact path="/project/:id/ranking" component={ProjectRankingPage}/>
+    <Route exact path="/project/:id/investors" component={ProjectRankingPage}/>
     <Route exact path="/project/:id/requests" component={RequestPage} />
     <Route exact path="/project/:id/requests/new" component={NewRequestPage} />
   </Switch>

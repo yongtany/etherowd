@@ -86,6 +86,9 @@ class ProjectContentContainer extends Component {
     var duration = moment.duration(now.diff(publishedDateFomatDate));
     var days = Math.floor(duration.asDays());
 
+    //var bestInvestors = investors.slice(0, 1);
+
+
     return (
           <ProjectContent
             loading={loading}
@@ -102,6 +105,7 @@ class ProjectContentContainer extends Component {
             isLoggedIn={isLoggedIn}
             isInvestor={isInvestor}
             investors={investors}
+            // bestInvestorList={bestInvestorList}
           />
     );
   }
