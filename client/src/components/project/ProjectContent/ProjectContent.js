@@ -13,7 +13,6 @@ const ProjectContent = props => {
   const bestInvestorList = investors.map(
       (investor) => {
         const { profile_image, username } = investor;
-        console.log(username);
         return (
           <div className={cx('investor')}>
             <img src={profile_image} alt={username} />
@@ -88,7 +87,7 @@ const ProjectContent = props => {
         </div>
 
         <p>베스트 투자자</p>
-        <div className={cx('info-content')}>
+        <div className={cx('info-content2')}>
           <div className={cx('best-investors')}>
             {bestInvestorList}
           </div>

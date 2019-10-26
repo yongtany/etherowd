@@ -40,7 +40,10 @@ class ProjectHeaderContainer extends Component {
       title,
       project_image,
       tags,
+      requestsCount
     } = project.toJS();
+
+    console.log(typeof requestsCount)
 
     return (
         <ProjectHeader
@@ -49,6 +52,7 @@ class ProjectHeaderContainer extends Component {
           title={title}
           project_image={project_image}
           tags={tags}
+          requestsCount={requestsCount}
         />
     );
   }
