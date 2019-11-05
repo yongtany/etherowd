@@ -9,8 +9,6 @@ import ProjectHeader from 'components/project/ProjectHeader';
 import Loading from 'components/common/Loader';
 
 class ProjectHeaderContainer extends Component {
-
-
   initialize = async () => {
     const { ProjectActions, id } = this.props;
     try {
@@ -21,8 +19,8 @@ class ProjectHeaderContainer extends Component {
     }
   }
 
-  async componentDidMount() {
-    await this.initialize();
+  componentDidMount() {
+    this.initialize();
   }
 
   componentDidUpdate() {
@@ -33,6 +31,8 @@ class ProjectHeaderContainer extends Component {
     const { loading, project, match } = this.props;
     const { id } = match.params;
 
+
+
     if(loading) return <Loading />;
 
     const {
@@ -40,10 +40,9 @@ class ProjectHeaderContainer extends Component {
       title,
       project_image,
       tags,
+      approversCount,
       requestsCount
     } = project.toJS();
-
-    console.log(typeof requestsCount)
 
     return (
         <ProjectHeader
@@ -52,6 +51,7 @@ class ProjectHeaderContainer extends Component {
           title={title}
           project_image={project_image}
           tags={tags}
+          approversCount={approversCount}
           requestsCount={requestsCount}
         />
     );

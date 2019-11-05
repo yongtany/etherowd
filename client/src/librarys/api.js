@@ -60,8 +60,6 @@ export const getProjectBlockChain = async address => {
    };
 }
 
-
-
 export const getRequestListBlockChain = async address => {
   const project = Project(address);
   const requestCount = await project.methods.getRequestCount().call();

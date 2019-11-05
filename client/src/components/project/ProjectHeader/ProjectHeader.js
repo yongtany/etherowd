@@ -35,7 +35,8 @@ const ProjectHeader = props => {
                 activeClassName="active"
                 exact to={`/project/${props.address}/requests`}>
                 요청사항 {props.requestsCount === "0" ? null : props.requestsCount}</NavLink>
-              <NavLink className={cx('project-link')} activeClassName="active" to={`/project/${props.address}/investors`}>투자자 랭킹</NavLink>
+              <NavLink className={cx('project-link')} activeClassName="active" to={`/project/${props.address}/investors`}>
+                투자자 {props.approversCount === "0" ? null : props.approversCount}</NavLink>
             </div>
           </div>
   )

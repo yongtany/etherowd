@@ -1,3 +1,13 @@
 .project-ranking {
-  padding: 5rem;
+  margin-top: 2rem;
+  .ranking-header {
+    margin-bottom: 3rem;
+    p {
+      font-size: 1.6rem;
+
+      span {
+        color: #05C4C7;
+      }
+    }
+  }
 }

@@ -15,11 +15,11 @@ const RecentItem = ({ address, project_image, title, tags }) => {
   return (
       <div className={cx('column')}>
         <Link className={cx('link')} to={`/project/${address}`}>
-          <div class="card recent-item">
-              <img class="card-img-top" src={project_image} alt={title} />
-              <div class="card-body">
-                <h5 class="card-title">{title}</h5>
-                <div class="card-text">
+          <div className="card recent-item">
+              <img className="card-img-top" src={project_image} alt={title} />
+              <div className="card-body">
+                <h5 className="card-title">{title}</h5>
+                <div className="card-text">
                   <p>{tagList}</p>
               </div>
             </div>

@@ -18,24 +18,25 @@ class ProjectRankingContainer extends Component {
     }
   }
 
-  componentDidUpdate() {
-    window.scrollTo(0,0);
+  async componentDidMount() {
+    await this.initialize();
   }
 
   render() {
-    // const { loading, project } = this.props;
+    const { loading, project } = this.props;
 
-    // if(loading) return <Loading />;
+    if(loading) return <Loading />;
 
-    // const {
-    //   title,
-    //   project_image,
-    //   body,
-    // } = project.toJS();
-
+    const {
+      investors,
+      approversCount
+    } = project.toJS();
 
     return (
-        <ProjectRanking />
+      <ProjectRanking
+        investors={investors}
+        approversCount={approversCount}
+      />
     );
   }
 }

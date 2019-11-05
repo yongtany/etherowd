@@ -9,6 +9,7 @@ const cx = classnames.bind(styles);
 
 const ProjectContent = props => {
   if(props.loading) return  <Loading />;
+
   const { investors = [] } = props;
   const bestInvestorList = investors.map(
       (investor) => {
@@ -21,6 +22,7 @@ const ProjectContent = props => {
         )
       }
     )
+
   return (
     <div className={cx('project-content col-md-4')}>
       <div className={cx('upperBox')}>
