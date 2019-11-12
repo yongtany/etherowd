@@ -70,10 +70,18 @@ class RequestRow extends Component {
     const { onApprove, onFinalize } = this;
     const { description, reqeust_image, recipient, value, approvalCount, approversCount, complete } = this.props;
 
+    const background = {
+      backgroundImage: `url(${reqeust_image})`,
+    }
+
     return (
       <div className={cx(`${complete && 'complete'}`)}>
         <div className={cx('request-row')}>
-          <img src={reqeust_image} alt={description} />
+          <div className={cx('request-img')} style={background}>
+            {complete ? <div className={cx('complete-overlay')}>
+              <p className={cx('complete-p')}>승인 완료</p>
+            </div> : null}
+          </div>
           <p className={cx('description')}>{description}</p>
           <p><label>필요 금액</label> <span>{web3.utils.fromWei(new web3.utils.BN(value), 'ether')} ether</span></p>
           <p><label>거래처 계좌번호</label> {recipient}</p>

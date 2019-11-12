@@ -17,7 +17,8 @@ const RequestList = ({ requests, address, approversCount, onApprove, onFinalize,
     ) :
     requests.map(
     (request, index) => {
-      const { description, value, recipient, approvalCount, reqeust_image } = request.toJS();
+      const { description, value, recipient, approvalCount, reqeust_image, complete } = request.toJS();
+      console.log()
       if(loading) return <Loading />;
 
       return (
@@ -30,7 +31,7 @@ const RequestList = ({ requests, address, approversCount, onApprove, onFinalize,
           reqeust_image={reqeust_image}
           // onApprove={onApprove}
           // onFinalize={onFinalize}
-          complete={request.complete}
+          complete={complete}
           key={index}
           index={index}
           address={address}

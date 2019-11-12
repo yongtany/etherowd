@@ -6,11 +6,22 @@
 .request-row {
   border-bottom: 1px solid gray;
   margin-bottom: 1rem;
-  img {
-    width: 100%;
-    max-height: 23rem;
+  .request-img {
     margin-bottom: 1rem;
+    min-height: 23rem;
+    background-size: 100% 100%;
+    .complete-overlay {
+      background: rgba(0,0,0,0.5);
+      min-height: 23rem;
+      text-align: center;
+      .complete-p {
+        padding-top: 10rem;
+        color: white;
+        font-size: 3rem;
+      }
+    }
   }
+
   .description {
     font-size: 1.2rem;
   }
