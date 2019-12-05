@@ -91,7 +91,7 @@ const ProjectContent = props => {
         <p>베스트 투자자</p>
         <div className={cx('info-content2')}>
           <div className={cx('best-investors')}>
-            {bestInvestorList}
+            {bestInvestorList.reverse().slice(-3)}
           </div>
           <p className={cx('more')}><Link to ={`/project/${props.address}/investors`}>더보기</Link></p>
         </div>
