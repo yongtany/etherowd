@@ -25,7 +25,7 @@ etherowd
 The solution is an used as a vote by investors. How will the founder use some of the investment required to carry out the project to investors when a request is sent, the money is automatically remitted after voting by the investors' judgment. Transparency in investment increases confidence between operators and investors.
 
 ## Live Demo
-![Landing](https://res.cloudinary.com/djs4injum/image/upload/v1575545001/%E1%84%85%E1%85%A2%E1%86%AB%E1%84%83%E1%85%B5%E1%86%BC%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5.gif)
+![Landing](https://res.cloudinary.com/djs4injum/image/upload/v1575545214/landing.gif)
 
 ## Project Stack
 
